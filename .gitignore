@@ -1,0 +1,8 @@
+.idea
+
+**/.DS_Store
+cmake-build-debug*
+
+external/src/boost_1_71_0.tar.gz
+external/build
+external/deps
