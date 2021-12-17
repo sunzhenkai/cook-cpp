@@ -1,5 +1,6 @@
 #include <boost/lambda/lambda.hpp>
 #include <iostream>
+#include<algorithm>
 
 int main() {
     typedef std::istream_iterator<int> in;

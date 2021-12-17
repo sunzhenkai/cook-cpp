@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.10)
+cmake_minimum_required(VERSION 3.16)
 project(cook-seastar)
 
 # versions
@@ -19,13 +19,17 @@ message(STATUS "CMAKE_CURRENT_LIST_DIR = ${CMAKE_CURRENT_LIST_DIR}")
 # includes
 include(${CMAKE_CURRENT_LIST_DIR}/external/utils.cmake)
 include(${CMAKE_CURRENT_LIST_DIR}/external/fmt/check.cmake)
+include(${CMAKE_CURRENT_LIST_DIR}/external/yaml-cpp/check.cmake)
 include(${CMAKE_CURRENT_LIST_DIR}/external/boost/check.cmake)
 include(${CMAKE_CURRENT_LIST_DIR}/external/seastar/check.cmake)
+
+message(STATUS "CMakePrefixPath info ${CMAKE_PREFIX_PATH}")
+message(STATUS "Boost_LIBRARIES info ${Boost_LIBRARIES}")
 
 include_directories(${SRC_INCLUDE_DIR})
 
 file(GLOB SOURCE_FILES src/*.cpp)
-set(EXTRA_LIB Seastar::seastar fmt::fmt)
+set(EXTRA_LIB fmt::fmt Seastar::seastar protobuf::libprotobuf ${Boost_LIBRARIES})
 
 # executables
 add_executable(hello src/sample/hello.cpp)
@@ -37,7 +41,7 @@ add_executable(boost src/sample/boost.cpp)
 target_link_libraries(boost)
 
 add_executable(sample src/tutorial/sample.cpp)
-target_link_libraries(sample ${EXTRA_LIB})
+target_link_libraries(sample fmt::fmt ${EXTRA_LIB})
 
 add_executable(smp src/tutorial/smp.cpp)
 target_link_libraries(smp ${EXTRA_LIB})
