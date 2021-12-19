@@ -3,13 +3,12 @@
 #include "iostream"
 
 using namespace std;
-using namespace seastar;
 
 int main(int argc, char** argv) {
-    app_template app;
+    seastar::app_template app;
     app.run(argc, argv, [] {
-        cout << "smp::count = " << smp::count << "\n";
-        return make_ready_future<>();
-    })
+        cout << "smp::count = " << seastar::smp::count << "\n";
+        return seastar::make_ready_future<>();
+    });
     return 0;
 }
