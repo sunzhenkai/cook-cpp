@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.16)
-project(cook-seastar)
+project(cook-cpp)
 
 # versions
 SET(SEASTAR_VERSION 20.05.0)
