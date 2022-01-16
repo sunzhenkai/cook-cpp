@@ -10,7 +10,7 @@ int main(int argc, char **argv) {
             ("size,s", bpo::value<int>()->default_value(100), "size");
     app.add_positional_options({
                                        {"filename", bpo::value<std::vector<seastar::sstring>>()->default_value({}),
-                                               "sstable files to verify", -1}
+                                               "table files to verify", -1}
                                });
     app.run(argc, argv, [&app] {
         auto& args = app.configuration();
