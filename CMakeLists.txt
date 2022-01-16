@@ -79,4 +79,4 @@ add_executable(sample src/tutorial/sample.cpp)
 target_link_libraries(sample ${EXTRA_LIB})
 
 add_executable(smp src/tutorial/smp.cpp)
-target_link_libraries(smp Seastar::seastar)
+target_link_libraries(smp ${EXTRA_LIB})

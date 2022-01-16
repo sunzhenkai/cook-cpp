@@ -4,11 +4,12 @@
 
 using namespace std;
 
-int main(int argc, char** argv) {
+int main(int argc, char **argv) {
     seastar::app_template app;
-    app.run(argc, argv, [] {
+    auto r = [] {
         cout << "smp::count = " << seastar::smp::count << "\n";
-        return seastar::make_ready_future<>();
-    });
-    return 0;
+        return seastar::make_ready_future<int>(0);
+    };
+
+    return app.run(argc, argv, std::move(r));
 }
