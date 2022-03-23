@@ -1,0 +1,42 @@
+# versions
+SET(SEASTAR_VERSION 20.05.0)
+
+# includes
+include(${CMAKE_CURRENT_LIST_DIR}/external/utils.cmake)
+include(${CMAKE_CURRENT_LIST_DIR}/external/boost/check.cmake)
+include(${CMAKE_CURRENT_LIST_DIR}/external/seastar/check.cmake)
+
+message(STATUS "CMakePrefixPath info ${CMAKE_PREFIX_PATH}")
+message(STATUS "Boost_LIBRARIES info ${Boost_LIBRARIES}")
+message(STATUS "libraries info yaml-cpp=${YAML_CPP_LIBRARIES}, fmt=${fmt_DIR}, "
+        "openssl=${OPENSSL_ROOT_DIR}")
+
+include_directories(${SRC_INCLUDE_DIR})
+
+
+file(GLOB SOURCE_FILES src/*.cpp)
+set(EXTRA_LIB
+        Seastar::seastar
+        fmt::fmt
+        protobuf::libprotobuf
+        cryptopp::cryptopp
+        ${YAML_CPP_LIBRARIES}
+        ${Boost_LIBRARIES}
+        pthread
+        dl
+        z)
+
+# executables
+add_executable(hello src/sample/hello.cpp)
+
+add_executable(fmt src/sample/fmt.cpp)
+target_link_libraries(fmt fmt::fmt)
+
+add_executable(boost src/sample/boost.cpp)
+target_link_libraries(boost)
+
+add_executable(sample src/tutorial/sample.cpp)
+target_link_libraries(sample ${EXTRA_LIB})
+
+add_executable(smp src/tutorial/smp.cpp)
+target_link_libraries(smp ${EXTRA_LIB})
