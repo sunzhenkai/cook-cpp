@@ -10,3 +10,6 @@ update: assets/scripts/update.sh
 
 check: assets/scripts/check.sh
 	@bash $<
+
+resolve: assets/scripts/resolve.sh
+	@bash $<
