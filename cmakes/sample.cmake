@@ -1,0 +1,1 @@
+add_executable(simple src/sample/simple/simple.cpp)
