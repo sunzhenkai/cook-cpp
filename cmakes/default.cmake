@@ -4,6 +4,8 @@ SET(SEASTAR_VERSION 20.05.0)
 # includes
 include(${CMAKE_CURRENT_LIST_DIR}/external/utils.cmake)
 include(${CMAKE_CURRENT_LIST_DIR}/external/boost/check.cmake)
+include(${CMAKE_CURRENT_LIST_DIR}/external/openssl/check.cmake)
+include(${CMAKE_CURRENT_LIST_DIR}/external/curl/check.cmake)
 include(${CMAKE_CURRENT_LIST_DIR}/external/seastar/check.cmake)
 
 message(STATUS "CMakePrefixPath info ${CMAKE_PREFIX_PATH}")
@@ -23,6 +25,9 @@ set(EXTRA_LIB
         ${YAML_CPP_LIBRARIES}
         ${Boost_LIBRARIES}
         pthread
+        openssl::ssl
+        openssl::crypto
+        curl::curl
         dl
         z)
 
@@ -40,3 +45,6 @@ target_link_libraries(sample ${EXTRA_LIB})
 
 add_executable(smp src/tutorial/smp.cpp)
 target_link_libraries(smp ${EXTRA_LIB})
+
+add_executable(curl_sample src/tutorial/curl/curl_sample.cpp)
+target_link_libraries(curl_sample ${EXTRA_LIB})

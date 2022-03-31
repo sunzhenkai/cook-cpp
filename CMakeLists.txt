@@ -17,3 +17,4 @@ message(STATUS "CMAKE_CURRENT_LIST_DIR = ${CMAKE_CURRENT_LIST_DIR}")
 
 #include(cmakes/mongo.cmake)
 include(cmakes/fmt.cmake)
+include(cmakes/sample.cmake)
