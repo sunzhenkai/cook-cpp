@@ -15,4 +15,5 @@ set(SRC_INCLUDE_DIR ${CMAKE_SOURCE_DIR}/include)
 message(STATUS "SRC_INCLUDE_DIR = ${SRC_INCLUDE_DIR}")
 message(STATUS "CMAKE_CURRENT_LIST_DIR = ${CMAKE_CURRENT_LIST_DIR}")
 
-include(cmakes/mongo.cmake)
+#include(cmakes/mongo.cmake)
+include(cmakes/fmt.cmake)
