@@ -1,0 +1,11 @@
+syntax = "proto3";
+
+message Sea {
+  string name = 1;
+}
+
+message World {
+  int64 age = 1;
+  repeated string tag = 2;
+  Sea sea = 3;
+}
