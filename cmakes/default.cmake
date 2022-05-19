@@ -2,11 +2,11 @@
 SET(SEASTAR_VERSION 20.05.0)
 
 # includes
-include(${CMAKE_CURRENT_LIST_DIR}/external/utils.cmake)
-include(${CMAKE_CURRENT_LIST_DIR}/external/boost/check.cmake)
-include(${CMAKE_CURRENT_LIST_DIR}/external/openssl/check.cmake)
-include(${CMAKE_CURRENT_LIST_DIR}/external/curl/check.cmake)
-include(${CMAKE_CURRENT_LIST_DIR}/external/seastar/check.cmake)
+include(${PROJECT_SOURCE_DIR}/external/utils.cmake)
+include(${PROJECT_SOURCE_DIR}/external/boost/check.cmake)
+include(${PROJECT_SOURCE_DIR}/external/openssl/check.cmake)
+include(${PROJECT_SOURCE_DIR}/external/curl/check.cmake)
+include(${PROJECT_SOURCE_DIR}/external/seastar/check.cmake)
 
 message(STATUS "CMakePrefixPath info ${CMAKE_PREFIX_PATH}")
 message(STATUS "Boost_LIBRARIES info ${Boost_LIBRARIES}")
@@ -18,7 +18,7 @@ include_directories(${SRC_INCLUDE_DIR})
 
 file(GLOB SOURCE_FILES src/*.cpp)
 set(EXTRA_LIB
-        Seastar::seastar
+        seastar::seastar
         fmt::fmt
         protobuf::libprotobuf
         cryptopp::cryptopp
