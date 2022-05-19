@@ -20,7 +20,7 @@ file(GLOB SOURCE_FILES src/*.cpp)
 set(EXTRA_LIB
         seastar::seastar
         fmt::fmt
-        protobuf::libprotobuf
+        protobuf::protobuf
         cryptopp::cryptopp
         ${YAML_CPP_LIBRARIES}
         ${Boost_LIBRARIES}
