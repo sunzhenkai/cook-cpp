@@ -40,6 +40,9 @@ target_link_libraries(fmt fmt::fmt)
 add_executable(boost src/sample/boost.cpp)
 target_link_libraries(boost)
 
+add_executable(boost_string_join src/sample/boost/string_join.cpp)
+target_link_libraries(boost)
+
 add_executable(sample src/tutorial/sample.cpp)
 target_link_libraries(sample ${EXTRA_LIB})
 

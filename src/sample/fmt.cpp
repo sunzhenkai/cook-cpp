@@ -15,12 +15,15 @@ int main(int argc, char **argv) {
         std::string r;
         r.append(foo).append("x").append(bar);
     }
-    std::cout << "elapsed: " << utils::elapsed(start) << std::endl;
+    std::cout << "elapsed: " << utils::elapsed(start) << std::endl; // 231
 
     start = utils::now();
     for (int i = 0; i < loop; ++i) {
         fmt::format("{}x{}", foo, bar);
     }
-    std::cout << "elapsed: " << utils::elapsed(start) << std::endl;
+    std::cout << "elapsed: " << utils::elapsed(start) << std::endl; // 584
     return 0;
-}
+} /*
+ * elapsed: 226
+ * elapsed: 585
+ * */
