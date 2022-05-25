@@ -1,0 +1,15 @@
+syntax = "proto3";
+
+message ABTestParam {
+  string key = 1;
+  string value = 2;
+}
+
+message AbKeys {
+  repeated ABTestParam all_ab_keys = 1;
+  repeated ABTestParam used_ab_keys = 2;
+}
+
+message RsRequest {
+  AbKeys abKeys = 16;
+}

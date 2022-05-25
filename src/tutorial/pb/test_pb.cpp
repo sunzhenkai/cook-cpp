@@ -1,6 +1,7 @@
 #include "iostream"
 #include "vector"
 #include "hello.pb.h"
+#include "mv.pb.h"
 #include "google/protobuf/reflection.h"
 #include "atomic"
 #include "google/protobuf/text_format.h"
@@ -41,6 +42,13 @@ public:
 
 
 int main() {
+    RsRequest req;
+    if (req.has_abkeys() && !req.abkeys().used_ab_keys().empty()) {
+        for (auto &ele: req.abkeys().used_ab_keys()) {
+            std::cout << "user_ab_keys:" << ele.key() << "\t" << ele.value();
+        }
+    }
+
 //    std::atomic<int> ai{4};
 //    std::cout << ai-- << std::endl;
 //    ai++;
