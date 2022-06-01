@@ -4,7 +4,7 @@
 
 int main(int argc, char **argv) {
     fmt::print("hello, fmt!\n");
-    std::cout << fmt::format("hello, {name}!", fmt::arg("name", "john")) << std::endl;
+    std::cout << fmt::fsormat("hello, {name}!", fmt::arg("name", "john")) << std::endl;
     std::cout << fmt::format("bool is {}", true) << std::endl;
 
     // concat benchmark

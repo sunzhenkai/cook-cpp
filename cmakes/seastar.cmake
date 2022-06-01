@@ -26,3 +26,6 @@ set(EXTRA_LIB
 # executables
 add_executable(seastar_socket src/sample/seastar/seastar_socket.cpp)
 target_link_libraries(seastar_socket ${EXTRA_LIB})
+
+add_executable(seastar_metric src/sample/seastar/seastar_metric.cpp)
+target_link_libraries(seastar_metric ${EXTRA_LIB})
