@@ -1,0 +1,6 @@
+table SampleTable {
+    id: uint64;
+    status: uint64;
+}
+
+root_type SampleTable;

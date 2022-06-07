@@ -6,7 +6,7 @@ include(${PROJECT_SOURCE_DIR}/external/utils.cmake)
 include(${PROJECT_SOURCE_DIR}/external/boost/check.cmake)
 include(${PROJECT_SOURCE_DIR}/external/openssl/check.cmake)
 include(${PROJECT_SOURCE_DIR}/external/curl/check.cmake)
-include(${PROJECT_SOURCE_DIR}/external/seastar/check.cmake)
+include(${PROJECT_SOURCE_DIR}/external/cryptopp/check.cmake)
 
 message(STATUS "CMakePrefixPath info ${CMAKE_PREFIX_PATH}")
 message(STATUS "Boost_LIBRARIES info ${Boost_LIBRARIES}")
@@ -18,7 +18,6 @@ include_directories(${SRC_INCLUDE_DIR})
 
 file(GLOB SOURCE_FILES src/*.cpp)
 set(EXTRA_LIB
-        seastar::seastar
         fmt::fmt
         protobuf::protobuf
         cryptopp::cryptopp
