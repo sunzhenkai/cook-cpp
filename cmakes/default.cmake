@@ -17,6 +17,12 @@ include_directories(${SRC_INCLUDE_DIR})
 
 
 file(GLOB SOURCE_FILES src/*.cpp)
+
+aux_source_directory(${CMAKE_SOURCE_DIR}/src/basic SRC_FILES)
+aux_source_directory(${CMAKE_SOURCE_DIR}/src/sample/simple SRC_FILES)
+
+message(STATUS "SRC_FILES = ${SRC_FILES}")
+
 set(EXTRA_LIB
         fmt::fmt
         protobuf::protobuf
@@ -31,7 +37,7 @@ set(EXTRA_LIB
         z)
 
 # executables
-add_executable(hello src/sample/hello.cpp)
+add_executable(hello src/sample/hello.cpp ${SRC_FILES})
 
 add_executable(fmt src/sample/fmt.cpp)
 target_link_libraries(fmt fmt::fmt)
