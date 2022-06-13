@@ -7,8 +7,8 @@ void ProcessProfiler(int signum) {
     static bool start = false;
     if (signum == SIGUSR1) {
         if (!start) {
-            HeapProfilerStart("gprof.log");
-            ProfilerStart("test.prof");
+            HeapProfilerStart("heap-profiler");
+            ProfilerStart("cpu-profiler.prof");
             std::cout << "ProfilerStart" << std::endl;
             start = true;
         } else {

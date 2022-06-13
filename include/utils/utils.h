@@ -3,6 +3,7 @@
 
 #include "vector"
 #include "chrono"
+#include "iostream"
 
 namespace utils {
     static std::chrono::time_point<std::chrono::system_clock> now() {
@@ -22,6 +23,14 @@ namespace utils {
             std::cout << v[i];
         }
         std::cout << "]" << std::endl;
+    }
+
+    static const char *What(std::exception_ptr ep) {
+        try {
+            if (ep) std::rethrow_exception(ep);
+        } catch (const std::exception &e) {
+            return e.what();
+        }
     }
 }
 

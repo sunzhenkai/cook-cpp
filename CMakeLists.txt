@@ -1,6 +1,7 @@
 cmake_minimum_required(VERSION 3.16)
 project(cook-cpp)
 
+message(STATUS "compile with ${CMAKE_CXX_COMPILER}, version ${CMAKE_CXX_COMPILER_VERSION}")
 # set symbols
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
@@ -25,4 +26,4 @@ include(cmakes/fmt.cmake)
 include(cmakes/pb.cmake)
 include(cmakes/fbs.cmake)
 include(cmakes/gperftools.cmake)
-#include(cmakes/seastar.cmake)
+include(cmakes/seastar.cmake)

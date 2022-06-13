@@ -1,6 +1,3 @@
-# versions
-SET(SEASTAR_VERSION 20.05.0)
-
 # includes
 include(${PROJECT_SOURCE_DIR}/external/utils.cmake)
 include(${PROJECT_SOURCE_DIR}/external/boost/check.cmake)
