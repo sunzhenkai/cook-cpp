@@ -1,4 +1,5 @@
 #include "iostream"
+#include "memory"
 
 class A {
 public:
@@ -17,9 +18,13 @@ A f() {
 }
 
 int main() {
-    A a = f();
-    std::string s;
-    s.append("1").append("2").append("3");
-    std::cout << s << std::endl;
+    //    A a = f();
+    //    std::string s;
+    //    s.append("1").append("2").append("3");
+    //    std::cout << s << std::endl;
+    {
+        std::shared_ptr<A> l = std::shared_ptr<A>(new A());
+    }
+    std::cout << "done" << std::endl;
     return 0;
 }

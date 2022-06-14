@@ -7,6 +7,7 @@
 #include "seastar/core/timer.hh"
 #include "utils/utils.h"
 #include "spdlog/spdlog.h"
+#include <seastar/core/sleep.hh>
 
 class ServerConnection {
 public:
@@ -32,24 +33,25 @@ class Server {
     std::atomic<uint64_t> connection_id_;
     seastar::lw_shared_ptr<seastar::http_server> http_server_ = nullptr;
 public:
-    seastar::future<> Start(uint32_t port, uint32_t http_port) {
+    void Start(uint32_t port, uint32_t http_port) {
+        std::cout << "start" << std::endl << std::flush;
         spdlog::info("[Server::Start] start server. [socket_port={}, http_port={}]", port, http_port);
 
         // http server
-        //        http_server_ = seastar::make_lw_shared<seastar::http_server>("http server");
-        //        seastar::prometheus::config cfg;
-        //        cfg.metric_help = "sample server";
-        //        seastar::prometheus::add_prometheus_routes(*http_server_, cfg)
-        //                .then([http_server_ = http_server_, http_port = http_port]() {
-        //                    auto address = seastar::make_ipv4_address({(uint16_t) http_port});
-        //                    return http_server_->listen(address);
-        //                });
+        http_server_ = seastar::make_lw_shared<seastar::http_server>("http server");
+        seastar::prometheus::config cfg;
+        cfg.metric_help = "sample server";
+        (void) seastar::prometheus::add_prometheus_routes(*http_server_, cfg)
+                .then([http_server_ = http_server_, http_port = http_port]() {
+                    auto address = seastar::make_ipv4_address({(uint16_t) http_port});
+                    return http_server_->listen(address);
+                });
 
         // socket server
         seastar::listen_options lo;
         lo.reuse_address = true;
         auto address = seastar::make_ipv4_address({(uint16_t) port});
-        return seastar::do_with(seastar::listen(address, lo), [this](auto &listener) {
+        (void) seastar::do_with(seastar::listen(address, lo), [this](auto &listener) {
             return seastar::keep_doing([this, &listener] {
                 return listener.accept().then([this](seastar::accept_result &&ar) mutable {
                     auto &[fd, addr] = ar;
@@ -61,7 +63,7 @@ public:
     }
 
     seastar::future<> HandleConnection(seastar::lw_shared_ptr<ServerConnection> conn) {
-        return seastar::do_until([conn] { return conn->IsValid(); }, [this, conn]() mutable {
+        return seastar::do_until([conn] { return !conn->IsValid(); }, [this, conn]() mutable {
             return HandleSession(conn);
         }).handle_exception([](std::exception_ptr ep) {
             spdlog::info("handle connection failed. [error={}]", utils::What(ep));
@@ -79,9 +81,8 @@ public:
 int main(int argc, char **argv) {
     seastar::app_template app;
     seastar::distributed<Server> server;
-    char *av[6] = {"--overprovisioned", "-c", "4", "--reactor-backend=epoll", "--blocked-reactor-notify-ms", "10"};
-    return app.run(sizeof av / sizeof *av, av, [&]() {
-        //    return app.run(argc, argv, [&]() {
+    char *av[5] = {"--overprovisioned", "-c", "4", "--blocked-reactor-notify-ms", "10"};
+    return app.run_deprecated(sizeof av / sizeof *av, av, [&]() {
         spdlog::info("run server");
         return server.invoke_on_all(&Server::Start, 8090u, 8091u);
     });
