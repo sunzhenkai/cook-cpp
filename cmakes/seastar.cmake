@@ -31,7 +31,7 @@ set(EXTRA_LIB seastar::seastar
         z)
 
 # executables
-set(TARGETS socket metric future server)
+set(TARGETS socket metric future server sample)
 foreach (TARGET IN LISTS TARGETS)
     add_executable(seastar_${TARGET} src/sample/seastar/seastar_${TARGET}.cpp)
     target_link_libraries(seastar_${TARGET} ${EXTRA_LIB})
