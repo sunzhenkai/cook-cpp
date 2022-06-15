@@ -16,7 +16,6 @@ include_directories(${SRC_INCLUDE_DIR})
 file(GLOB SOURCE_FILES src/*.cpp)
 
 aux_source_directory(${CMAKE_SOURCE_DIR}/src/basic SRC_FILES)
-aux_source_directory(${CMAKE_SOURCE_DIR}/src/sample/simple SRC_FILES)
 
 message(STATUS "SRC_FILES = ${SRC_FILES}")
 

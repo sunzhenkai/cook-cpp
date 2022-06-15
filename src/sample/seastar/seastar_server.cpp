@@ -9,6 +9,9 @@
 #include "spdlog/spdlog.h"
 #include <seastar/core/sleep.hh>
 #include "seastar/core/alien.hh"
+#include <cstdlib>
+#include <iostream>
+#include <ctime>
 
 #define CPU_ID seastar::engine().cpu_id()
 #define READY seastar::make_ready_future<>()
@@ -26,6 +29,8 @@ public:
 };
 
 class ContextBase {
+public:
+    virtual void Done(int status) = 0;
 };
 
 template<typename T>
@@ -35,7 +40,7 @@ public:
 
     Context(T &&f) : cb(std::move(f)) {}
 
-    void Done(int status) {
+    void Done(int status) override {
         cb(status);
     }
 };
@@ -145,15 +150,19 @@ public:
     }
 
     void AsyncPayload(std::unique_ptr<ContextBase> context) {
-        
+        auto rd = std::rand();
+        spdlog::info("[Server::AsyncPayload] do async payload. [rand={}]", rd);
+        //        throw std::runtime_error("e");
+        if (rd > 0) context->Done(0);
     }
 
     seastar::future<> Payload() {
-        seastar::promise<int> status;
-        auto future = status.get_future();
-        auto cb = [status = std::move(status)](int s) mutable {
-            seastar::alien::submit_to(CPU_ID, [s, status = std::move(status)]() mutable {
-                status.set_value(s);
+        auto pm = std::make_unique<seastar::promise<int>>();
+        auto future = pm->get_future();
+        auto cb = [pm = std::move(pm), cid = CPU_ID](int s) mutable {
+            spdlog::info("[Server::Payload] payload done. [status={}, cid={}]", s, cid);
+            seastar::alien::submit_to(cid, [s, pm = std::move(pm)]() mutable {
+                pm->set_value(s);
                 return seastar::make_ready_future<int>(0);
             });
         };
@@ -161,7 +170,7 @@ public:
         std::unique_ptr<ContextBase> context(new Context<std::decay_t<decltype(cb)>>(std::move(cb)));
         std::thread td(&Server::AsyncPayload, this, std::move(context));
         std::shared_ptr<A> ap = std::make_shared<A>();
-        return future.then([ap = ap](int status) {
+        return future.then([ap = ap, td = std::move(td)](int status) {
             return seastar::sleep(std::chrono::seconds(3)).then([] {
                 return READY;
             });
@@ -170,6 +179,7 @@ public:
 };
 
 int main(int argc, char **argv) {
+    std::srand(std::time(nullptr));
     seastar::app_template app;
     seastar::distributed<Server> server;
     char *av[5] = {"--overprovisioned", "-c", "1", "--blocked-reactor-notify-ms", "25"};
