@@ -97,8 +97,6 @@ int main() {
 
     m.GetReflection()->SetString(const_cast<google::protobuf::Message *>(mp), sf, "pacific");
 //    m.GetReflection()->SetString(std::const_pointer_cast<google::protobuf::Message *>(&m), f, "no");
-//    std::cout << "ckpt 2; " << m.PrintDebugString()
-    std::cout << "ckpt 2; ";
     m.PrintDebugString();
 
     std::string output;
