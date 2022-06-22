@@ -1,6 +1,7 @@
 table SampleTable {
     id: uint64;
     status: uint64;
+    name: string;
 }
 
 root_type SampleTable;

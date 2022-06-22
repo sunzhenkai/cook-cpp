@@ -14,9 +14,10 @@ inline typename std::enable_if<I == sizeof...(Vs), void>::type PrintPP(std::tupl
 }
 
 template<size_t... Vs>
-void PrintSeq(std::index_sequence<Vs...> seq) {
+void PrintSeq(std::index_sequence<Vs...>) {
     std::cout << sizeof...(Vs) << std::endl;
     auto tp = std::make_tuple(pow(Vs)...);
+    std::cout << std::get<0>(tp) << ", " << std::get<1>(tp) << std::endl;
 }
 
 int main() {
