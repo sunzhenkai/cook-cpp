@@ -10,8 +10,6 @@ SET(CMAKE_CXX_FLAGS_DEBUG ${CMAKE_CXX_FLAGS})
 SET(CMAKE_CXX_FLAGS_RELEASE ${CMAKE_CXX_FLAGS})
 SET(LIBRARY_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/lib)
 
-include(external/utils.cmake)
-
 add_definitions(-Wall -g)
 set(SRC_INCLUDE_DIR ${CMAKE_SOURCE_DIR}/include)
 
@@ -21,12 +19,12 @@ message(STATUS "CMAKE_CURRENT_LIST_DIR = ${CMAKE_CURRENT_LIST_DIR}")
 #include(cmakes/mongo.cmake)
 #include(cmakes/default.cmake)
 #include(cmakes/fmt.cmake)
-#include(cmakes/sample.cmake)
+include(cmakes/sample.cmake)
 #include(cmakes/thread.cmake)
 #include(cmakes/pb.cmake)
 #include(cmakes/fbs.cmake)
 #include(cmakes/gperftools.cmake)
-#include(cmakes/seastar.cmake)
+include(cmakes/seastar.cmake)
 #include(cmakes/brpc.cmake)
 
 include(external/boost/check.cmake)

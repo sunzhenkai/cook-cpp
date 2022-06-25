@@ -11,7 +11,7 @@ include(${PROJECT_SOURCE_DIR}/external/openssl/check.cmake)
 include(${PROJECT_SOURCE_DIR}/external/curl/check.cmake)
 include(${PROJECT_SOURCE_DIR}/external/seastar/check.cmake)
 include(${PROJECT_SOURCE_DIR}/external/spdlog/check.cmake)
-#include(${PROJECT_SOURCE_DIR}/external/fmt/check.cmake)
+include(${PROJECT_SOURCE_DIR}/external/fmt/check.cmake)
 
 include_directories(${SRC_INCLUDE_DIR})
 
@@ -20,7 +20,7 @@ set(EXTRA_LIB seastar::seastar
         protobuf::protobuf
         spdlog::spdlog
         cryptopp::cryptopp
-        ${YAML_CPP_LIBRARIES}
+        yaml-cpp::yaml-cpp
         ${Boost_LIBRARIES}
         pthread
         stdc++fs
