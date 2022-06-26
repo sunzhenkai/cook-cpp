@@ -1,0 +1,16 @@
+syntax = "proto3";
+package sample;
+
+message Request {
+  int64 rid = 1;
+  string msg = 2;
+}
+
+message Response {
+  int64 rid = 1;
+  string msg = 2;
+}
+
+service EchoService {
+  rpc Echo(Request) returns (Response) {}
+}
