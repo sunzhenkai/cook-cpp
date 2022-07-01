@@ -5,7 +5,6 @@ set(SEASTAR_VERSION 89cc842f65922b888310d21e61cca9a454feaa84)
 set(SEASTAR_GIT_REPOSITORY git@gitlab.mobvista.com:ml-platform/seastar.git)
 
 # includes
-include(${PROJECT_SOURCE_DIR}/external/utils.cmake)
 include(${PROJECT_SOURCE_DIR}/external/boost/check.cmake)
 include(${PROJECT_SOURCE_DIR}/external/openssl/check.cmake)
 include(${PROJECT_SOURCE_DIR}/external/curl/check.cmake)

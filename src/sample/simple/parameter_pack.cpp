@@ -6,6 +6,5 @@ void f() {
 }
 
 int main() {
-    auto seq = std::make_index_sequence<>
     return 0;
 }
