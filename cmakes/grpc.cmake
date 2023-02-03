@@ -1,4 +1,4 @@
-include(${CMAKE_SOURCE_DIR}/external/grpc/check.cmake)
+include(${CMAKE_SOURCE_DIR}/external/grpc/load.cmake)
 
 file(MAKE_DIRECTORY ${PROJECT_BINARY_DIR}/gen/protobuf/cpp)
 

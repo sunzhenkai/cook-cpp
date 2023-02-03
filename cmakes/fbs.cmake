@@ -1,4 +1,4 @@
-include(${CMAKE_SOURCE_DIR}/external/flatbuffers/check.cmake)
+include(${CMAKE_SOURCE_DIR}/external/flatbuffers/load.cmake)
 
 file(MAKE_DIRECTORY ${PROJECT_BINARY_DIR}/gen/flatbuffers/cpp)
 
