@@ -1,4 +1,4 @@
-include(${CMAKE_SOURCE_DIR}/external/protobuf/check.cmake)
+include(${CMAKE_SOURCE_DIR}/external/protobuf/load.cmake)
 
 file(MAKE_DIRECTORY ${PROJECT_BINARY_DIR}/gen/protobuf/cpp)
 

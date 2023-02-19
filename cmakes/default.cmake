@@ -1,9 +1,9 @@
 # includes
 include(${PROJECT_SOURCE_DIR}/external/utils.cmake)
-include(${PROJECT_SOURCE_DIR}/external/boost/check.cmake)
-include(${PROJECT_SOURCE_DIR}/external/openssl/check.cmake)
-include(${PROJECT_SOURCE_DIR}/external/curl/check.cmake)
-include(${PROJECT_SOURCE_DIR}/external/cryptopp/check.cmake)
+include(${PROJECT_SOURCE_DIR}/external/boost/load.cmake)
+include(${PROJECT_SOURCE_DIR}/external/openssl/load.cmake)
+include(${PROJECT_SOURCE_DIR}/external/curl/load.cmake)
+include(${PROJECT_SOURCE_DIR}/external/cryptopp/load.cmake)
 
 message(STATUS "CMakePrefixPath info ${CMAKE_PREFIX_PATH}")
 message(STATUS "Boost_LIBRARIES info ${Boost_LIBRARIES}")
