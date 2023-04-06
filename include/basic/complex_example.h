@@ -18,4 +18,9 @@ public:
     std::string ToString(const V *v) {
         return ToString(*v);
     }
+
+    template<typename T>
+    std::string ToString(const std::function<T()> &f) {
+        return ToString(f());
+    }
 };

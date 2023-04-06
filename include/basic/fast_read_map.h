@@ -32,4 +32,30 @@ namespace utils {
         std::mutex mtx;
         std::vector<std::unordered_map<K, V>> buffer;
     };
+
+    template<typename K, typename V>
+    class FastReadMapV2 {
+    public:
+        explicit FastReadMapV2(int buf_size) {
+            data.reserve(buf_size);
+        }
+
+        V &Get(const K &k) {
+            while (flag.load()) {}
+            auto it = data.find(k);
+            return it->second;
+        }
+
+        void Put(const K &k, V &&v) {
+            while (!flag.compare_exchange_strong(BOOL_FALSE, BOOL_TRUE)) {}
+            data.find(k);
+            data.emplace(k, std::move(v));
+            flag.store(BOOL_FALSE);
+        }
+
+        std::unordered_map<K, V> data;
+    private:
+        std::atomic<bool> flag{false};
+        bool BOOL_TRUE{true}, BOOL_FALSE{false};
+    };
 }

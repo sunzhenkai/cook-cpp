@@ -17,6 +17,7 @@ message(STATUS "SRC_INCLUDE_DIR = ${SRC_INCLUDE_DIR}")
 message(STATUS "CMAKE_CURRENT_LIST_DIR = ${CMAKE_CURRENT_LIST_DIR}")
 
 #include(${PROJECT_SOURCE_DIR}/external/base.cmake)
+#include(${PROJECT_SOURCE_DIR}/external/fmt.cmake)
 #include(${PROJECT_SOURCE_DIR}/external/gcc/load.cmake)
 
 include(cmakes/basic.cmake)

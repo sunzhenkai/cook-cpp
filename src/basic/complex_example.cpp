@@ -13,5 +13,6 @@ int main() {
     ComplexObject co;
     Point pt{1, 2};
     std::cout << co.ToString(pt) << std::endl;
+    std::cout << co.ToString<Point>([]() { return Point{2, 3}; }) << std::endl;
     return 0;
 }
