@@ -2,6 +2,9 @@
 include(${PROJECT_SOURCE_DIR}/external/seastar/load.cmake)
 include_directories(${SRC_INCLUDE_DIR})
 
+add_executable(sample_seastar src/tutorial/seastar/sample_seastar.cpp)
+add_dependencies(sample_seastar seastar_lib)
+
 #set(EXTRA_LIB seastar::seastar
 #        fmt::fmt
 #        protobuf::protobuf
