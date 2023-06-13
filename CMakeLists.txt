@@ -3,7 +3,7 @@ project(cook-cpp)
 
 message(STATUS "compile with ${CMAKE_CXX_COMPILER}, version ${CMAKE_CXX_COMPILER_VERSION}")
 # set symbols
-set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 SET(CMAKE_CXX_FLAGS "-w -g -pthread -std=gnu++17 -fno-omit-frame-pointer")
 SET(CMAKE_CXX_FLAGS_DEBUG ${CMAKE_CXX_FLAGS})
