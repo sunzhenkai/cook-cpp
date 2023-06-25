@@ -5,16 +5,17 @@
 #include "spdlog/spdlog.h"
 
 int main() {
-    std::string f1 = "hello world";
-    f1[5] = '\0';
-    std::string result = fmt::format("{}", std::string_view(f1.data(), f1.size()));
-    std::string result2 = fmt::format("{}", f1);
-    std::cout << f1.size() << " - " << result.size() << " - " << result2.size() << std::endl;
-    std::cout << result2 << std::endl;
-    std::cout << result2.c_str() << std::endl;
-
-    std::shared_ptr<spdlog::logger> logger = spdlog::rotating_logger_mt<spdlog::async_factory>(#name, "log/"#file
-    ".log", (size) * 1024 * 1024, backup); \
+    std::cout << fmt::format("{}", "yes") << std::endl;
+//    std::string f1 = "hello world";
+//    f1[5] = '\0';
+//    std::string result = fmt::format("{}", std::string_view(f1.data(), f1.size()));
+//    std::string result2 = fmt::format("{}", f1);
+//    std::cout << f1.size() << " - " << result.size() << " - " << result2.size() << std::endl;
+//    std::cout << result2 << std::endl;
+//    std::cout << result2.c_str() << std::endl;
+//
+//    std::shared_ptr<spdlog::logger> logger = spdlog::rotating_logger_mt<spdlog::async_factory>(#name, "log/"#file
+//    ".log", (size) * 1024 * 1024, backup); \
 
     return 0;
     //    std::string f1 = "{{\"status\": {}}}"; // ok
