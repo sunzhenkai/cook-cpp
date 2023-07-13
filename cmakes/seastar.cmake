@@ -3,10 +3,12 @@ include(${PROJECT_SOURCE_DIR}/external/fmt/load.cmake)
 include(${PROJECT_SOURCE_DIR}/external/seastar/load.cmake)
 include_directories(${SRC_INCLUDE_DIR})
 
+
 add_executable(sample_seastar src/tutorial/seastar/sample_seastar.cpp)
 add_dependencies(sample_seastar seastar_lib fmt_lib)
+
 #target_link_libraries(sample_seastar /tmp/cpp-external-lib/seastar/lib/libseastar.a)
-target_link_libraries(sample_seastar PRIVATE PkgConfig::PKG_SEASTAR PkgConfig::PKG_FMT)
+#target_link_libraries(sample_seastar PRIVATE PkgConfig::PKG_SEASTAR PkgConfig::PKG_FMT)
 
 #set(EXTRA_LIB seastar::seastar
 #        fmt::fmt
