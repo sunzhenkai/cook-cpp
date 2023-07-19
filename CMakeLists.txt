@@ -64,7 +64,6 @@ include(${PROJECT_SOURCE_DIR}/external/zlib/load.cmake)
 
 # cooking targets
 #include(cmakes/basic.cmake)
->>>>>>> d1f6f11fd198d33e7162c841cf3054e58f7c48c1
 #include(cmakes/mongo.cmake)
 #include(cmakes/default.cmake)
 #include(cmakes/fmt.cmake)
