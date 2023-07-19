@@ -1,0 +1,24 @@
+{
+  "name": "cook-cpp",
+  "version": "0.0.1",
+  "dependencies": [
+    "boost",
+    "fmt",
+    "spdlog"
+  ],
+  "overrides": [
+    {
+      "name": "boost",
+      "version": "1.82.0"
+    },
+    {
+      "name": "fmt",
+      "version": "9.1.0"
+    },
+    {
+      "name": "spdlog",
+      "version": "1.11.0"
+    }
+  ],
+  "builtin-baseline": "861c33057553ee836e7061ffbdabc25ea343145d"
+}
