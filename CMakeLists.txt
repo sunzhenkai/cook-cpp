@@ -17,6 +17,9 @@ set(SRC_INCLUDE_DIR ${CMAKE_SOURCE_DIR}/include)
 message(STATUS "SRC_INCLUDE_DIR = ${SRC_INCLUDE_DIR}")
 message(STATUS "CMAKE_CURRENT_LIST_DIR = ${CMAKE_CURRENT_LIST_DIR}")
 
+# vcpkg
+include(vcpkg/vcpkg.cmake)
+
 include(cmakes/utils.cmake)
 
 # cooking targets
