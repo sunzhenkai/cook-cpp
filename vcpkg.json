@@ -5,7 +5,8 @@
     "boost-core",
     "boost-algorithm",
     "fmt",
-    "spdlog"
+    "spdlog",
+    "seastar"
   ],
   "overrides": [
     {
@@ -23,6 +24,10 @@
     {
       "name": "spdlog",
       "version": "1.11.0"
+    },
+    {
+      "name": "seastar",
+      "version": "22.11.0"
     }
   ],
   "builtin-baseline": "21bbb14c4113b89cd06402e852e075341722304f"
