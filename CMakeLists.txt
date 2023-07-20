@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.24)
+# or -DCMAKE_TOOLCHAIN_FILE=/home/wii/.local/vcpkg/scripts/buildsystems/vcpkg.cmake
 project(cook-cpp)
 
-message(STATUS "${VCPKG_TOOLCHAIN_FILE}")
 message(STATUS "compile with ${CMAKE_CXX_COMPILER}, version ${CMAKE_CXX_COMPILER_VERSION}")
 # set symbols
 set(CMAKE_CXX_STANDARD 20)

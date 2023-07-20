@@ -6,3 +6,5 @@ cmake-build-*
 external/src/boost_1_71_0.tar.gz
 external/build
 external/deps
+
+vcpkg_installed
