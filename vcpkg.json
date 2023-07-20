@@ -6,7 +6,9 @@
     "boost-algorithm",
     "fmt",
     "spdlog",
-    "seastar"
+    "seastar",
+    "brpc",
+    "grpc"
   ],
   "overrides": [
     {
