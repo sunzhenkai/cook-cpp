@@ -1,6 +1,5 @@
-include(${PROJECT_SOURCE_DIR}/external/fmt/load.cmake)
-include(${PROJECT_SOURCE_DIR}/external/spdlog/load.cmake)
+find_package(fmt REQUIRED)
+find_package(spdlog REQUIRED)
 
 add_executable(tfmt src/sample/fmt/fmt.cpp)
-#add_dependencies(tfmt fmt)
-target_link_libraries(tfmt PkgConfig::PKG_SPDLOG PkgConfig::PKG_FMT)
+target_link_libraries(tfmt fmt::fmt spdlog::spdlog)

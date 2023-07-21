@@ -1,3 +1,3 @@
-[submodule "external"]
-	path = external
-	url = git@github.com:sunzhenkai/cmake-external-targets.git
+[submodule "vcpkg"]
+	path = vcpkg
+	url = git@github.com:sunzhenkai/vcpkg-base.git
