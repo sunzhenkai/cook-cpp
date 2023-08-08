@@ -8,7 +8,7 @@
     "registries": [
         {
             "kind": "git",
-            "repository": "https://github.com/sunzhenkai/vcpkg-base",
+            "repository": "https://gitee.com/szhenkai/vcpkg-base.git",
             "baseline": "931e59e17fd4559a457a51415ff63de2a0d5df91",
             "packages": [
                 "seastar"

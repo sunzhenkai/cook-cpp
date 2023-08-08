@@ -7,8 +7,14 @@
     "fmt",
     "spdlog",
     "seastar",
+    "gflags",
+    "protobuf",
+    "leveldb",
     "brpc",
-    "grpc"
+    "grpc",
+    "rapidjson",
+    "gtest",
+    "thrift"
   ],
   "overrides": [
     {

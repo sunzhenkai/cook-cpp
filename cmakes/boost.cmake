@@ -1,4 +1,3 @@
-include(${PROJECT_SOURCE_DIR}/external/boost/load.cmake)
 message(STATUS "CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}")
 # document https://cmake.org/cmake/help/latest/module/FindBoost.html
 find_package(Boost REQUIRED COMPONENTS filesystem )
