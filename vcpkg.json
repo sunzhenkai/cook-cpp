@@ -7,8 +7,14 @@
     "fmt",
     "spdlog",
     "seastar",
+    "gflags",
+    "protobuf",
+    "leveldb",
     "brpc",
-    "grpc"
+    "grpc",
+    "rapidjson",
+    "gtest",
+    "thrift"
   ],
   "overrides": [
     {
@@ -18,14 +24,6 @@
     {
       "name": "boost-algorithm",
       "version": "1.82.0"
-    },
-    {
-      "name": "fmt",
-      "version": "9.1.0"
-    },
-    {
-      "name": "spdlog",
-      "version": "1.11.0"
     },
     {
       "name": "seastar",
