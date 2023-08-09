@@ -8,7 +8,6 @@ find_package(unofficial-brpc CONFIG REQUIRED)
 find_package(leveldb CONFIG REQUIRED)
 find_package(Protobuf CONFIG REQUIRED)
 find_package(gflags CONFIG REQUIRED)
-message(STATUS "CC - ${Thrift_FOUND} - ${CMAKE_PREFIX_PATH}")
 
 add_executable(gt_main ${GTEST_SRCS})
 target_link_libraries(gt_main PRIVATE
