@@ -41,12 +41,12 @@ int main(int argc, char **argv) {
         cntl.set_log_id(log_id++);
         stub.Echo(&cntl, &request, &response, nullptr);
         if (!cntl.Failed()) {
-            spdlog::info("Received response from {} to {}: {} latency={}",
+            spdlog::info("Received request from {} to {}: {} latency={}",
                          endpoint2str(cntl.local_side()).c_str(),
                          endpoint2str(cntl.remote_side()).c_str(),
                          response.message(), cntl.latency_us());
         }
-        usleep(1000);
+        usleep(1000 * 1000);
     }
 
     return 0;

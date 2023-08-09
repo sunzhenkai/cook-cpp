@@ -10,8 +10,8 @@ add_executable(sample_brpc src/tutorial/brpc/sample_brpc.cpp)
 target_link_libraries(sample_brpc PRIVATE unofficial::brpc::brpc-static)
 
 include_directories(${CMAKE_CURRENT_BINARY_DIR}) # include proto headers
-add_executable(echo_client src/tutorial/brpc/echo_client.cpp ${PROTO_SRCS} ${PROTO_HDRS})
-target_link_libraries(echo_client PRIVATE unofficial::brpc::brpc-static spdlog::spdlog)
-add_executable(echo_service src/tutorial/brpc/echo_service.cpp ${PROTO_SRCS} ${PROTO_HDRS})
-target_link_libraries(echo_service PRIVATE unofficial::brpc::brpc-static spdlog::spdlog)
+add_executable(brpc_echo_client src/tutorial/brpc/echo_client.cpp ${PROTO_SRCS} ${PROTO_HDRS})
+target_link_libraries(brpc_echo_client PRIVATE unofficial::brpc::brpc-static spdlog::spdlog)
+add_executable(brpc_echo_service src/tutorial/brpc/echo_service.cpp ${PROTO_SRCS} ${PROTO_HDRS})
+target_link_libraries(brpc_echo_service PRIVATE unofficial::brpc::brpc-static spdlog::spdlog)
 
