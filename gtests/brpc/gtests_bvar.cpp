@@ -12,16 +12,23 @@ TEST(BRPC, BVAR) {
     std::cout << count.get_value() << std::endl;
 }
 
-void RunTask() {
+void *RunTask(void *args) {
     bthread_usleep(500);
+    return nullptr;
 }
 
 TEST(BRPC, BTHREAD) {
     std::vector<bthread_t> ids;
     ids.resize(FLAGS_thread_num);
+    std::cout << "create task" << std::endl;
     for (int i = 0; i < FLAGS_thread_num; ++i) {
-        if (bthread_start_background(&ids[i], NULL, RunTask, NULL) != 0) {
-
+        if (bthread_start_background(&ids[i], nullptr, RunTask, nullptr) != 0) {
+            std::cerr << "failed to create bthread" << std::endl;
         }
     }
+    std::cout << "wait done" << std::endl;
+    for (auto &i: ids) {
+        bthread_join(i, nullptr);
+    }
+    std::cout << "done" << std::endl;
 }

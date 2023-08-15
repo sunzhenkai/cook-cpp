@@ -14,7 +14,8 @@
     "grpc",
     "rapidjson",
     "gtest",
-    "thrift"
+    "thrift",
+    "flatbuffers"
   ],
   "overrides": [
     {
