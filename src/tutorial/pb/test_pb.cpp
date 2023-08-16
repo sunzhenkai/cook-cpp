@@ -40,7 +40,6 @@ public:
     }
 };
 
-
 int main() {
     RsRequest req;
     if (req.has_abkeys() && !req.abkeys().used_ab_keys().empty()) {
