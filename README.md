@@ -1,3 +1,4 @@
+
 # Prepare
 
 ```shell
@@ -15,12 +16,6 @@ make resolve
 other dependency list.
 
 - dpdk
-
-### ubuntu
-
-```shell
-sudo apt-get install dpdk-dev libdpdk-dev
-```
 
 # Modify
 
