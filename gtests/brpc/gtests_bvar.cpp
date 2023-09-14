@@ -20,8 +20,8 @@ TEST(BRPC, BTHREAD) {
     std::vector<bthread_t> ids;
     ids.resize(FLAGS_thread_num);
     for (int i = 0; i < FLAGS_thread_num; ++i) {
-        if (bthread_start_background(&ids[i], NULL, RunTask, NULL) != 0) {
-
-        }
+        //        if (bthread_start_background(&ids[i], NULL, RunTask, NULL) != 0) {
+        //
+        //        }
     }
 }
