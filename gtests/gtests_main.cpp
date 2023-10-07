@@ -8,4 +8,11 @@ int main(int argc, char **argv) {
 
 TEST(Hello, World) {
     std::cout << "hello" << std::endl;
+
+    std::string data = "sport\0030.002";
+    auto it = data.find('\003');
+    std::cout << std::string(data.c_str(), it)
+              << " - "
+              << std::stof(data.c_str() + it + 1)
+              << std::endl;
 }

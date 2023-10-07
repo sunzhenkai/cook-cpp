@@ -14,7 +14,8 @@
     "grpc",
     "rapidjson",
     "gtest",
-    "thrift"
+    "thrift",
+    "flatbuffers"
   ],
   "overrides": [
     {
@@ -26,8 +27,20 @@
       "version": "1.82.0"
     },
     {
+      "name": "fmt",
+      "version": "9.1.0"
+    },
+    {
+      "name": "spdlog",
+      "version": "1.11.0"
+    },
+    {
       "name": "seastar",
       "version": "22.11.0"
+    },
+    {
+      "name": "brpc",
+      "version": "1.5.0"
     }
   ],
   "builtin-baseline": "21bbb14c4113b89cd06402e852e075341722304f"
