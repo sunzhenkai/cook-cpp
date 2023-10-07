@@ -26,7 +26,7 @@ include(vcpkg/CMakeLists.txt)
 include(cmakes/utils.cmake)
 
 # cooking targets
-#include(cmakes/basic.cmake)
+include(cmakes/basic.cmake)
 #include(cmakes/mongo.cmake)
 #include(cmakes/default.cmake)
 include(cmakes/fmt.cmake)
