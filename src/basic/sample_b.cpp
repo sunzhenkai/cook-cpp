@@ -1,8 +1,9 @@
 #include "iostream"
-#include "fmt/format.h"
+//#include "fmt/format.h"
 #include "regex"
 #include "string_view"
 #include "unordered_map"
+#include <functional>
 
 using namespace std::string_view_literals;
 
@@ -21,30 +22,30 @@ namespace std {
 //    }
 //}
 
-template<typename T>
-std::string ToString(const T &t) {
-    return fmt::format("{}", t);
-}
+//template<typename T>
+//std::string ToString(const T &t) {
+//    return fmt::format("{}", t);
+//}
 
 //template<typename T>
 //std::string ToString(const T *t) {
 //    return fmt::format("{}", t);
 //}
 
-void f1(const std::string &s) {
-    std::cout << ToString(s) << std::endl;
-}
+//void f1(const std::string &s) {
+//    std::cout << ToString(s) << std::endl;
+//}
 
-template<typename T>
-void f2(const T &s) {
-    std::cout << ToString(s) << std::endl;
-}
-
-template<typename T>
-void f2(const T *s) {
-    std::cout << ToString(s) << std::endl;
-}
-
+//template<typename T>
+//void f2(const T &s) {
+//    std::cout << ToString(s) << std::endl;
+//}
+//
+//template<typename T>
+//void f2(const T *s) {
+//    std::cout << ToString(s) << std::endl;
+//}
+//
 struct SMA {
     float f{0.0};
     int order{0};
@@ -125,6 +126,40 @@ int main() {
     std::size_t result = 0;
     HashCombine(result, 1, 0, 0);
     std::cout << result << std::endl;
+
+    result = 0;
+    HashCombine(result, 1, 0);
+    std::cout << result << std::endl;
+
+    std::string s0 = "0", sa = "a";
+    result = 0;
+    HashCombine(result, 1, s0);
+    //    HashCombine(result, 1, std::hash<std::string>{}("0"));
+    std::cout << result << std::endl;
+
+    result = 0;
+    HashCombine(result, 1, std::hash<std::string>{}("0"));
+    std::cout << result << std::endl;
+
+    result = 0;
+    HashCombine(result, 1, s0, sa);
+    std::cout << result << std::endl;
+
+    result = 0;
+    HashCombine(result, 1, 0, s0, sa);
+    std::cout << result << std::endl;
+
+    result = 0;
+    HashCombine(result, 1, 0, 0, s0, sa);
+    std::cout << result << std::endl;
+
+    result = 0;
+    HashCombine(result, 1, std::hash<std::string>{}("0"), std::hash<std::string>{}("a"));
+    std::cout << result << std::endl;
+
+    std::string hello = "hello";
+    std::string_view hello_sv = "hello"sv;
+    std::cout << (hello == hello_sv) << std::endl;
     //    auto t = GetFileTimeFromString("", "%4d%2d%2d%2d%2d");
     //    std::cout << t << std::endl;
     //    BB bb("hello");
