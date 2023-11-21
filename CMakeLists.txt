@@ -1,5 +1,7 @@
 cmake_minimum_required(VERSION 3.24)
 # or -DCMAKE_TOOLCHAIN_FILE=/home/wii/.local/vcpkg/scripts/buildsystems/vcpkg.cmake
+# vcpkg
+include(vcpkg/CMakeLists.txt)
 project(cook-cpp)
 
 message(STATUS "compile with ${CMAKE_CXX_COMPILER}, version ${CMAKE_CXX_COMPILER_VERSION} ${CMAKE_CURRENT_SOURCE_DIR}")
@@ -19,14 +21,12 @@ include_directories(${SRC_INCLUDE_DIR})
 message(STATUS "SRC_INCLUDE_DIR = ${SRC_INCLUDE_DIR}")
 message(STATUS "CMAKE_CURRENT_LIST_DIR = ${CMAKE_CURRENT_LIST_DIR}")
 
-# vcpkg
-include(vcpkg/CMakeLists.txt)
 #AddLibrary(boost VERSION 1.82.0)
 #AddLibrary(fmt VERSION 9.1.0)
 include(cmakes/utils.cmake)
 
 # cooking targets
-#include(cmakes/basic.cmake)
+include(cmakes/basic.cmake)
 #include(cmakes/mongo.cmake)
 #include(cmakes/default.cmake)
 include(cmakes/fmt.cmake)

@@ -8,3 +8,4 @@ external/build
 external/deps
 
 vcpkg_installed
+build
