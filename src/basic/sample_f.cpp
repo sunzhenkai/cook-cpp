@@ -33,6 +33,7 @@ void test_forward_list() {
 
     fl.push_front(0);
     utils::display(fl);
+    fl.insert_after(fl.begin(), 1);
 }
 
 int main() {

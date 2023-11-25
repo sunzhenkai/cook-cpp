@@ -15,7 +15,11 @@
     "rapidjson",
     "gtest",
     "thrift",
-    "flatbuffers"
+    "flatbuffers",
+    "datastax-cpp-driver",
+    "libuv",
+    "openssl",
+    "zlib"
   ],
   "overrides": [
     {

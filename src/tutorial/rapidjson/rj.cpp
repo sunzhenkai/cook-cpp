@@ -21,5 +21,14 @@ int main() {
         std::cout << " > " << iter->GetInt() << std::endl;
     }
     std::cout << d.HasParseError() << std::endl;
+
+    // Value
+    rapidjson::Value v1(rapidjson::kArrayType);
+    rapidjson::Value v2(rapidjson::kStringType);
+    rapidjson::Value v3("string_value");
+    rapidjson::Value v4(1);
+    rapidjson::Value v5(1.1);
+    std::cout << v4.GetType() << std::endl; // number type
+    std::cout << v5.GetType() << std::endl; // number type
     return 0;
 }
