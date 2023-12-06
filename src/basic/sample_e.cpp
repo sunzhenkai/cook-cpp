@@ -12,6 +12,7 @@
 #include "shared_mutex"
 #include "mutex"
 #include "functional"
+#include "unordered_set"
 
 template<typename T>
 void Unique(std::vector<T> &data) {
@@ -111,6 +112,13 @@ struct TestA {
 
 
 int main() {
+    std::unordered_set<std::string_view> ss;
+    std::vector<std::string> s = {"a", "b", "a", "c", "d", "v", "b", "c"};
+    for (auto &i: s) {
+        std::cout << "- " << (ss.find(i) == ss.end()) << std::endl;
+        ss.insert(i);
+    }
+
     SimpleSafeMap<std::string, std::shared_ptr<TestA>> m;
     m.Insert("a", std::make_shared<TestA>(1));
     m.Insert("a", std::make_shared<TestA>(2));
