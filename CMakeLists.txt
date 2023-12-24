@@ -25,9 +25,10 @@ message(STATUS "CMAKE_CURRENT_LIST_DIR = ${CMAKE_CURRENT_LIST_DIR}")
 #AddLibrary(fmt VERSION 9.1.0)
 #include(cmakes/utils.cmake)
 
-include(cmakes/cassandra.cmake)
+#include(cmakes/cassandra.cmake)
 # cooking targets
 include(cmakes/basic.cmake)
+include(cmakes/study.cmake)
 #include(cmakes/mongo.cmake)
 #include(cmakes/default.cmake)
 #include(cmakes/fmt.cmake)
