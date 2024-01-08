@@ -19,7 +19,8 @@
     "datastax-cpp-driver",
     "libuv",
     "openssl",
-    "zlib"
+    "zlib",
+    "arrow"
   ],
   "overrides": [
     {
