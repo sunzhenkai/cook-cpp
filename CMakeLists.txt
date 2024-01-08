@@ -29,6 +29,7 @@ message(STATUS "CMAKE_CURRENT_LIST_DIR = ${CMAKE_CURRENT_LIST_DIR}")
 # cooking targets
 include(cmakes/basic.cmake)
 include(cmakes/arrow.cmake)
+include(cmakes/study.cmake)
 #include(cmakes/mongo.cmake)
 #include(cmakes/default.cmake)
 #include(cmakes/fmt.cmake)
