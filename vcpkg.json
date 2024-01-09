@@ -20,7 +20,9 @@
     "libuv",
     "openssl",
     "zlib",
-    "arrow"
+    "arrow",
+    "orc",
+    "mongo-cxx-driver"
   ],
   "overrides": [
     {

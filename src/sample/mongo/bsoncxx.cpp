@@ -9,10 +9,9 @@
 #include "iostream"
 
 using namespace bsoncxx;
+using namespace builder::stream;
 
-int main(int, char **) {
-    using namespace builder::stream;
-
+builder::stream::document BuildOne() {
     builder::stream::document build_doc;
     // {
     //     "_id" : 1,
@@ -43,8 +42,12 @@ int main(int, char **) {
               << "Draper Prize"
               << "year" << 1993 << "by"
               << "National Academy of Engineering" << close_document << close_array;
+    return build_doc;
+}
 
-    auto doc = build_doc.view();
+int TestBson() {
+    auto builder = BuildOne();
+    auto doc = builder.view();
 
     // Once we have the document view, we can use ["key"] or [index] notation to reach into nested
     // documents or arrays.
@@ -75,11 +78,29 @@ int main(int, char **) {
         bsoncxx::array::view arr(arr_element.get_array().value);
         std::cout << arr.length() << std::endl; // 67; not count of elements
         for (auto e: arr) {
-            std::cout << "E " << e.get_utf8().value.to_string() << std::endl;
+//            std::cout << "E " << e.get_utf8().value.to_string() << std::endl;
         }
     }
 
     // Make all variables used.
     return (awards && first_award_year && second_award_year && last_name) ? EXIT_SUCCESS
                                                                           : EXIT_FAILURE;
+}
+
+// Type https://github.com/apache/orc/blob/main/c%2B%2B/test/TestType.cc
+// Writer https://github.com/apache/orc/blob/main/c%2B%2B/test/TestWriter.cc
+void TestBsonSchema() {
+    auto builder = BuildOne();
+    auto vw = builder.view();
+    std::cout << vw.empty() << " - " << vw.length() << std::endl;
+    for (auto it = vw.begin(); it != vw.end(); ++it) {
+        std::cout << to_string(it->type()) << ": " << it->key()<< std::endl;
+    }
+}
+
+void TestOrc() {
+}
+
+int main(int, char **) {
+    TestBsonSchema();
 }
