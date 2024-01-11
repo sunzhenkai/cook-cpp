@@ -24,15 +24,34 @@ public:
     }
 };
 
-int main() {
-    A a(std::unordered_map<std::string, std::string>{{"a", "b"}});
-
-    std::random_device rd_;
-    std::mt19937 gen_{rd_()};
-
-    for (int i = 0; i < 1000; ++i) {
-        std::uniform_int_distribution<int> dist(0, 999);
-        std::cout << dist(gen_) << std::endl;
+void TestIter() {
+    std::unordered_map<int, int> mi;
+    for (int i = 0; i < 10; ++i) {
+        mi[i] = i;
     }
+
+    // 遍历关联容器并, 修改迭代器
+    for (auto it: mi) {
+        std::cout << it.first << " - " << it.second << std::endl;
+        if (it.first == 5) mi.erase(it.first);
+    }
+    std::cout << " - " << std::endl;
+    for (auto it: mi) {
+        std::cout << it.first << " - " << it.second << std::endl;
+    }
+}
+
+int main() {
+    TestIter();
+//    A a(std::unordered_map<std::string, std::string>{{"a", "b"}});
+//
+//    std::random_device rd_;
+//    std::mt19937 gen_{rd_()};
+//
+//    for (int i = 0; i < 1000; ++i) {
+//        std::uniform_int_distribution<int> dist(0, 999);
+//        std::cout << dist(gen_) << std::endl;
+//    }
+//
     return 0;
 }
