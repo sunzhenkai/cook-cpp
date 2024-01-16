@@ -20,3 +20,5 @@ add_executable(future_a src/tutorial/future/future_a.cpp)
 # base
 add_executable(base_mutex src/basic/base_mutex.cpp)
 add_executable(base_chrono src/basic/base_chrono.cpp)
+add_executable(basic_str src/basic/basic_str.cpp)
+add_executable(basic_init_list src/basic/basic_init_list.cpp)
