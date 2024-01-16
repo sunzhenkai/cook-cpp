@@ -16,3 +16,7 @@ add_executable(sample_e src/basic/sample_e.cpp)
 add_executable(sample_f src/basic/sample_f.cpp)
 add_executable(complex_example src/basic/complex_example.cpp)
 add_executable(future_a src/tutorial/future/future_a.cpp)
+
+# base
+add_executable(base_mutex src/basic/base_mutex.cpp)
+add_executable(base_chrono src/basic/base_chrono.cpp)
