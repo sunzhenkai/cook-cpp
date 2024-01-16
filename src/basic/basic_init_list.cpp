@@ -1,4 +1,5 @@
 #include "iostream"
+#include "vector"
 
 class SampleClass {
 public:
@@ -46,9 +47,16 @@ public:
     }
 
 private:
-    int data;
+    int data{0};
 };
 
 int main() {
+    std::vector<SampleClass> scs{SampleClass(1)}; // 调用一次参数构造、一次拷贝构造
+    std::cout << "> initialized <" << std::endl;
+    std::vector<SampleClass> scs2;
+    scs2.emplace_back(1); // 调用一次参数构造
+    std::cout << "> initialized <" << std::endl;
+    scs2.reserve(10); // 重新分配内存, 调用一次移动构造函数
+    std::cout << "> done <" << std::endl;
     return 0;
 }
