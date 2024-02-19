@@ -13,17 +13,16 @@ void *payload(void *arg) {
 
 void c_thread() {
     // 1. init variables
-    auto arg = new Arg{2};
+    Arg arg{2};
     pthread_attr_t attr;
     int exit_status;
 
     // 2. create thread & run
     pthread_t thread_id;
-    pthread_create(&thread_id, &attr, payload, arg);
+    pthread_create(&thread_id, &attr, payload, &arg);
     pthread_join(thread_id, (void **) &exit_status);
 
     // 3. clean
-    delete arg;
     printf("thread exit status: %d\n", exit_status);
 }
 
