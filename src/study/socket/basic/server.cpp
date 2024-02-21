@@ -5,9 +5,9 @@
 #include <netinet/in.h>
 #include <unistd.h>
 
-Server::Server(int port) : port(port) {}
+SocketServer::SocketServer(int port) : port(port) {}
 
-void Server::Start() {
+void SocketServer::Start() {
     // 1. create socket
     if ((socket_fd = socket(AF_INET, SOCK_STREAM, 0)) < 0) {
         perror("create socket failed");
@@ -32,15 +32,40 @@ void Server::Start() {
         exit(EXIT_FAILURE);
     }
     // 5. accept
-    accept_thread = std::thread(Server::Accept, nullptr);
+    is_running = true;
+    accept_thread = std::thread(SocketServer::Accept, this);
 }
 
-Server::~Server() {
-    if (socket_fd != 0) {
-        close(socket_fd);
+SocketServer::~SocketServer() {
+    Stop();
+}
+
+void SocketServer::Accept(void *args) {
+    auto that = (SocketServer *) args;
+    socklen_t addr_length = sizeof(address);
+    while (that->is_running) {
+        int socket_fd{0};
+        if ((socket_fd = accept(that->socket_fd, (struct sockaddr *) &that->address, &addr_length)) < 0) {
+            perror("accept failed");
+        } else {
+            that->Process(socket_fd);
+        }
     }
 }
 
-void Server::Accept(void *args) {
+void SocketServer::Join() {
+    if (accept_thread.joinable()) {
+        accept_thread.join();
+    }
+}
 
+void SocketServer::Stop() {
+    is_running = false;
+    if (socket_fd != 0) {
+        close(socket_fd);
+        socket_fd = 0;
+    }
+    if (accept_thread.joinable()) {
+        accept_thread.join();
+    }
 }

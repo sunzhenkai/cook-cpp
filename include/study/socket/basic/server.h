@@ -3,14 +3,20 @@
 #include <netinet/in.h>
 #include "thread"
 
-class Server {
+class SocketServer {
 public:
-    explicit Server(int port);
+    explicit SocketServer(int port);
     void Start();
+    void Stop();
+    void Join();
     static void Accept(void *args);
-    ~Server();
+    virtual void Process(int socket_fd) = 0;
+    ~SocketServer();
+protected:
+    int port{0};
 private:
-    int port{0}, socket_fd{0}, socket_opt{1};
+    int socket_fd{0}, socket_opt{1};
     struct sockaddr_in address;
     std::thread accept_thread;
+    bool is_running{false};
 };
