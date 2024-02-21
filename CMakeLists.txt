@@ -16,9 +16,11 @@ set(CMAKE_INSTALL_PREFIX /tmp/cook-cpp)
 
 add_definitions(-Wall -g)
 set(SRC_INCLUDE_DIR ${CMAKE_SOURCE_DIR}/include)
+set(SRC_DIR ${CMAKE_SOURCE_DIR}/src)
 include_directories(${SRC_INCLUDE_DIR})
+include_directories(${SRC_DIR})
 
-message(STATUS "SRC_INCLUDE_DIR = ${SRC_INCLUDE_DIR}")
+message(STATUS "SRC_INCLUDE_DIR=${SRC_INCLUDE_DIR}, SRC_DIR=${SRC_DIR}")
 message(STATUS "CMAKE_CURRENT_LIST_DIR = ${CMAKE_CURRENT_LIST_DIR}")
 
 #AddLibrary(boost VERSION 1.82.0)
