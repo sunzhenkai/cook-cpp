@@ -2,11 +2,12 @@
 #include "unordered_map"
 #include "vector"
 #include "cstring"
+#include "tuple"
 
 struct ModelServiceResponse {
     int status; // 0: 正常
     // 打分结果分为三级, 第一级: 打分记录, 第二级: 多任务, 第三级: 多头
-    std::vector<std::vector<std::vector<float>>> scores;
+    std::vector<std::vector<std::vector<float> > > scores;
     std::string model_name;
     std::string model_version;
     std::string debug_info;
@@ -84,8 +85,8 @@ void fa() {
     SliceIterator iter(10, 3, 3);
     while (true) {
         auto next = iter.Next();
-        if (!std::get<2>(next)) break;
-        std::cout << std::get<0>(next) << " - " << std::get<1>(next) << std::endl;
+        if (!std::get < 2 > (next)) break;
+        std::cout << std::get < 0 > (next) << " - " << std::get < 1 > (next) << std::endl;
     }
 }
 
@@ -101,20 +102,43 @@ struct RawFeatureMapBundle {
     std::unordered_map<std::string, std::vector<RawFeatureMap>> l3;
 };
 
-int main() {
-    fa();
-//    std::unordered_map<std::string, std::string> ms;
-//    t();
+void StringSplit(const std::string &in, const char &c, std::vector<std::string_view> &ret) {
+    ret.clear();
+    for (size_t i = 0, j = 0; j <= in.size(); i = ++j) {
+        while (j < in.size() && in[j] != c)
+            ++j;
+        ret.emplace_back(std::string_view(in.data() + i, j - i));
+    }
+}
 
-//    std::vector<std::string> values;
-//    std::string value = "abcd";
-//    auto entity = value.c_str();
-//    auto c = strchr(entity, 'c');
+void fb() {
+    std::string s = "1#1.1#2.1";
+    std::vector<std::string_view> svs;
+    StringSplit(s, '#', svs);
+    for (auto v: svs) {
+        std::cout << v << std::endl;
+    }
+}
+
+void fc() {
+    std::vector<std::string> vs {"1", "2", "3"};
+    std::unordered_map<std::string, std::string> m;
+}
+
+int main() {
+//    fb();
+    //    std::unordered_map<std::string, std::string> ms;
+    //    t();
+
+    //    std::vector<std::string> values;
+    //    std::string value = "abcd";
+    //    auto entity = value.c_str();
+    //    auto c = strchr(entity, 'c');
     //    for (auto s = entity; s != c; ++s) {
     //        std::cout << "> " << *s << std::endl;
     //    }
     //    std::cout << (c - entity) << " " << std::string(entity, 2) << std::endl;
-//    values.emplace_back(entity, c);
+    //    values.emplace_back(entity, c);
     //    values.emplace_back(entity, (size_t)(c - entity));
     //    std::cout << values.front() << std::endl;
     return 0;
