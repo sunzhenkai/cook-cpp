@@ -1,7 +1,10 @@
 include_directories(${SRC_INCLUDE_DIR})
+message(STATUS "SRC_INCLUDE_DIR=${SRC_INCLUDE_DIR}")
 
 #find_package(fmt REQUIRED)
 #find_package(Boost 1.76 COMPONENTS ALL)
+
+set(BASIC_SRCS "")
 
 add_executable(basic src/basic/sample_a.cpp)
 add_executable(sample_b src/basic/sample_b.cpp)
@@ -12,9 +15,11 @@ add_executable(sample_b src/basic/sample_b.cpp)
 set(CMAKE_CXX_FLAGS "-O0")
 add_executable(sample_c src/basic/sample_c.cpp)
 add_executable(sample_d src/basic/sample_d.cpp)
+add_executable(sample_i src/basic/sample_i.cpp)
 add_executable(sample_e src/basic/sample_e.cpp)
 add_executable(sample_f src/basic/sample_f.cpp)
 add_executable(sample_g src/basic/sample_g.cpp)
+#add_executable(sample_h src/basic/sample_h.cpp)
 add_executable(complex_example src/basic/complex_example.cpp)
 add_executable(future_a src/tutorial/future/future_a.cpp)
 
