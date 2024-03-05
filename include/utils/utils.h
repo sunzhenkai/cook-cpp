@@ -81,6 +81,15 @@ namespace utils {
         infile.read(result.data(), length + 1);
         return result;
     }
+
+    std::string WhatError(std::exception_ptr ep) {
+        try {
+            std::rethrow_exception(ep);
+        }
+        catch (const std::exception &e) {
+            return {e.what()};
+        }
+    }
 }
 
 #endif //COOK_CPP_UTILS_H

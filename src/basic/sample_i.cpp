@@ -1,6 +1,7 @@
 #include "iostream"
 #include "unordered_map"
 #include "basic/sample_structs.h"
+#include "utils/utils.h"
 
 void ta() {
     std::unordered_map<std::string, Animal> am;
@@ -11,7 +12,18 @@ void ta() {
     }
 }
 
+void tb() {
+    std::exception_ptr ex = std::make_exception_ptr(std::out_of_range("empty result"));
+    try {
+        std::rethrow_exception(ex);
+    } catch (const std::out_of_range &e) {
+        std::cout << "out_of_range: " << e.what() << std::endl;
+    } catch (...) {
+        std::cout << utils::WhatError(ex) << std::endl;
+    }
+}
+
 int main() {
-    ta();
+    tb();
     return 0;
 }
