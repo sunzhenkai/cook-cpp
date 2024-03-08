@@ -23,7 +23,14 @@ void tb() {
     }
 }
 
+void tc() {
+    Animal a, b;
+    std::cout << "---" << std::endl;
+    std::cout << (true ? a : b).value << std::endl;
+    std::cout << "---" << std::endl;
+}
+
 int main() {
-    tb();
+    tc();
     return 0;
 }

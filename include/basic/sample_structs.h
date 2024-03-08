@@ -3,7 +3,7 @@
 #include "iostream"
 
 struct Animal {
-//    int value = 0;
+    int value = 0;
 
     // 默认构造函数
     Animal() {
