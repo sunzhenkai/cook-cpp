@@ -4,6 +4,7 @@
 
 struct Animal {
     int value = 0;
+    std::string name;
 
     // 默认构造函数
     Animal() {
@@ -11,18 +12,26 @@ struct Animal {
     };
     // 拷贝构造函数
     Animal(const Animal &other) {
+        value = other.value;
+        name = other.name;
         std::cout << "[Animal] " << this << " copy constructor" << std::endl;
     }
     // 赋值构造
     Animal &operator=(const Animal &other) {
+        value = other.value;
+        name = other.name;
         std::cout << "[Animal] " << this << " copy assignment constructor" << std::endl;
     }
     // move 构造
-    Animal(Animal &&other) {
+    Animal(Animal &&other) noexcept {
+        value = other.value;
+        name = std::move(other.name);
         std::cout << "[Animal] " << this << " move constructor" << std::endl;
     }
     // 赋值 move 构造
-    Animal &operator=(Animal &&other) {
+    Animal &operator=(Animal &&other) noexcept {
+        value = other.value;
+        name = std::move(other.name);
         std::cout << "[Animal] " << this << " move assignment constructor" << std::endl;
     }
 
