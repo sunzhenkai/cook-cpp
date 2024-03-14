@@ -21,6 +21,7 @@ struct Animal {
         value = other.value;
         name = other.name;
         std::cout << "[Animal] " << this << " copy assignment constructor" << std::endl;
+        return *this;
     }
     // move 构造
     Animal(Animal &&other) noexcept {
@@ -33,6 +34,7 @@ struct Animal {
         value = other.value;
         name = std::move(other.name);
         std::cout << "[Animal] " << this << " move assignment constructor" << std::endl;
+        return *this;
     }
 
     // 析构函数
