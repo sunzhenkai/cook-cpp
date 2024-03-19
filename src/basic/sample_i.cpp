@@ -2,6 +2,7 @@
 #include "unordered_map"
 #include "basic/sample_structs.h"
 #include "utils/utils.h"
+#include "memory"
 
 void ta() {
     std::unordered_map<std::string, Animal> am;
@@ -30,7 +31,15 @@ void tc() {
     std::cout << "---" << std::endl;
 }
 
+void td() {
+    std::shared_ptr<int> si = std::make_shared<int>();
+    auto si2 = si;
+    std::cout << si2.use_count() << std::endl;
+    std::weak_ptr<int> si3 = si;
+    std::cout << si2.use_count() << " - " << si3.use_count() << std::endl;
+}
+
 int main() {
-    tc();
+    td();
     return 0;
 }
