@@ -39,7 +39,22 @@ void td() {
     std::cout << si2.use_count() << " - " << si3.use_count() << std::endl;
 }
 
+void te() {
+    std::shared_ptr<int> pa = std::make_shared<int>(1);
+    std::cout << pa.get() << std::endl;
+    std::shared_ptr<int> pb = pa;
+    pa = nullptr;
+    std::cout << pb.get() << std::endl;
+    std::cout << pa.get() << std::endl;
+}
+
+void tf() {
+    int a[9];
+    auto j = a; // 此时j 为指针为 int* 类型，而不是 int(*)[9] 类型
+    std::cout << typeid(j).name() << " "<<sizeof(j)<<" "<<sizeof(a)<< std::endl;
+}
+
 int main() {
-    td();
+    tf();
     return 0;
 }
