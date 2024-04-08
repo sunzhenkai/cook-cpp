@@ -3,6 +3,8 @@
 #include "basic/sample_structs.h"
 #include "utils/utils.h"
 #include "memory"
+#include "cmath"
+#include "algorithm"
 
 void ta() {
     std::unordered_map<std::string, Animal> am;
@@ -51,10 +53,41 @@ void te() {
 void tf() {
     int a[9];
     auto j = a; // 此时j 为指针为 int* 类型，而不是 int(*)[9] 类型
-    std::cout << typeid(j).name() << " "<<sizeof(j)<<" "<<sizeof(a)<< std::endl;
+    std::cout << typeid(j).name() << " " << sizeof(j) << " " << sizeof(a) << std::endl;
+}
+
+int solve(const std::string &s) {
+    if (s.size() <= 1) return s.size();
+    std::vector<int> flag(26, -1);
+    int result = 0;
+    for (int i = 0, j = 0; i < s.size(); ++j) {
+        int pre = flag[s[j] - 'a'];
+        if (pre > i) {
+            result = std::max(result, j - i);
+            i = pre + 1;
+        }
+        flag[s[j] - 'a'] = j;
+    }
+    return result;
+}
+
+struct AnimalB {
+    int value = 0;
+
+    // 默认构造函数
+    AnimalB(int value) : value(value) {
+        std::cout << "[Animal] " << this << " default constructor" << std::endl;
+    };
+};
+
+void fg() {
+    static AnimalB animal(2);
+    std::cout << animal.value << std::endl;
+    animal.value = 3;
 }
 
 int main() {
-    tf();
+    fg();
+    fg();
     return 0;
 }

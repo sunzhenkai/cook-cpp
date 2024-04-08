@@ -1,5 +1,5 @@
 find_package(flatbuffers CONFIG REQUIRED)
-include(${PROJECT_SOURCE_DIR}/vcpkg/cmakes/flatbuffers.cmake)
+#include(${PROJECT_SOURCE_DIR}/vcpkg/cmakes/flatbuffers.cmake)
 
 GenerateFlatbuffersMessage(
         SRCS FB_SRCS
