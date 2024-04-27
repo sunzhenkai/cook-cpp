@@ -1,5 +1,13 @@
 syntax = "proto3";
 
+enum COLOR {
+  COLOR_BLUE = 0;
+}
+
+enum COLORV2 {
+  COLORV2_BLUE = 0;
+}
+
 message ABTestParam {
   string key = 1;
   string value = 2;

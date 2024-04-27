@@ -24,11 +24,21 @@ std::string ToString(const std::vector<T> &data) {
     return buf.str();
 }
 
-int main() {
+void ta() {
     std::vector<float> data = {0.1, 0.2, 0.3};
     std::cout << ToString(data) << std::endl;
 
     std::vector<std::vector<float>> data2(1, data);
-    std::cout << ToString(data2) << std::endl;
+//    std::cout << ToString(data2) << std::endl;
+}
+
+void tb() {
+    float f = 1.0;
+    std::cout << std::to_string(f) << std::endl;
+    std::cout << fmt::format("{}", f) << std::endl;
+}
+
+int main() {
+    tb();
     return 0;
 }
