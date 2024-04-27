@@ -205,7 +205,60 @@ void fh() {
     std::cout << (d == 0.0) << std::endl;
 }
 
+// 字符串, 不会有重复的
+// 所有字符的组合
+// a b c
+
+void solve_recursive(std::vector<std::string> &result, const std::string &s, std::string &cur, size_t length, size_t index) {
+    if (index >= s.size()) {
+        result.emplace_back(std::string{cur.data(), cur.data() + length});
+        return;
+    }
+    solve_recursive(result, s, cur, length, index + 1);
+    cur[length] = s[index];
+    solve_recursive(result, s, cur, length + 1, index + 1);
+}
+
+void solve(std::vector<std::string> &result, const std::string &s) {
+    std::string cur;
+    cur.resize(s.size());
+    solve_recursive(result, s, cur, 0, 0);
+}
+
+// int 数组, 奇数+偶数, 最长子数组长度, 要求奇偶个数相等
+/*
+1, 2, 3, 4, 5, 6, 7
+1  1  2  2  3  3  4
+0  1  1  2  2  3  3
+
+1  0  1  0  1  0  1
+
+奇数 +1, 偶数 -1
+
+sum_1，奇数
+sum_2，偶数
+
+ i
+cur_min = min(sum_1[i], sum_2[i])
+max_p = 2 * min(sum_1[i], sum_2[i]);
+sum_1[i] - sum_1[i-cur_min*2] == cur_min && sum_2[i] - sum_2[i-cur_min*2] == cur_min
+  更新 result
+
+ for 1 -> cur_min
+
+1 0 0 0 0 0 0 0 1
+1 1 1 1 1 1 1 1 2
+0 1 2 3 4 5 6 7 7
+
+
+ * */
+
 int main() {
-    fh();
+    std::vector<std::string> result;
+//    int i = solve(result, "abc");
+    for (auto &s: result) {
+        std::cout << s << std::endl;
+    }
+//    fh();
     return 0;
 }
