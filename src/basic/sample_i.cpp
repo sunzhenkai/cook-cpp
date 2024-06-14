@@ -209,7 +209,8 @@ void fh() {
 // 所有字符的组合
 // a b c
 
-void solve_recursive(std::vector<std::string> &result, const std::string &s, std::string &cur, size_t length, size_t index) {
+void
+solve_recursive(std::vector<std::string> &result, const std::string &s, std::string &cur, size_t length, size_t index) {
     if (index >= s.size()) {
         result.emplace_back(std::string{cur.data(), cur.data() + length});
         return;
@@ -253,12 +254,18 @@ sum_1[i] - sum_1[i-cur_min*2] == cur_min && sum_2[i] - sum_2[i-cur_min*2] == cur
 
  * */
 
+void aa() {
+    std::string s = "ff";
+    std::cout << utils::HexToInt64(s) << " - " << std::stol(s, nullptr, 16) << std::endl;
+}
+
 int main() {
-    std::vector<std::string> result;
+    aa();
+//    std::vector<std::string> result;
 //    int i = solve(result, "abc");
-    for (auto &s: result) {
-        std::cout << s << std::endl;
-    }
+//    for (auto &s: result) {
+//        std::cout << s << std::endl;
+//    }
 //    fh();
     return 0;
 }

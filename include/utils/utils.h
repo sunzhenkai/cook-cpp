@@ -90,6 +90,19 @@ namespace utils {
             return {e.what()};
         }
     }
+
+    template<typename S>
+    int64_t HexToInt64(const S &s) {
+        int64_t result{0};
+        for (size_t i = 0ul; i < s.size(); ++i) {
+            result = result << 4;
+            if ('0' <= s[i] && s[i] <= '9') result += s[i] - '0';
+            else if ('a' <= s[i] && s[i] <= 'f') result += s[i] - 'a' + 10;
+            else if ('A' <= s[i] && s[i] <= 'F') result += s[i] - 'A' + 10;
+            else break;
+        }
+        return result;
+    }
 }
 
 #endif //COOK_CPP_UTILS_H
