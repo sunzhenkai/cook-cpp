@@ -51,10 +51,23 @@ void te() {
 void tf() {
     int a[9];
     auto j = a; // 此时j 为指针为 int* 类型，而不是 int(*)[9] 类型
-    std::cout << typeid(j).name() << " "<<sizeof(j)<<" "<<sizeof(a)<< std::endl;
+    std::cout << typeid(j).name() << " " << sizeof(j) << " " << sizeof(a) << std::endl;
+}
+
+void tg() {
+    auto r = "6601160d8e989550754ceaax";
+    auto s = utils::GetTimestampFromRequestId(r);
+    std::cout << s << std::endl;
+}
+
+void th() {
+    std::shared_ptr<int> i;
+    if (i == nullptr) {
+        std::cout << "YES" << std::endl;
+    }
 }
 
 int main() {
-    tf();
+    th();
     return 0;
 }
