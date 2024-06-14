@@ -56,6 +56,19 @@ void tf() {
     std::cout << typeid(j).name() << " " << sizeof(j) << " " << sizeof(a) << std::endl;
 }
 
+void tg() {
+    auto r = "6601160d8e989550754ceaax";
+    auto s = utils::GetTimestampFromRequestId(r);
+    std::cout << s << std::endl;
+}
+
+void th() {
+    std::shared_ptr<int> i;
+    if (i == nullptr) {
+        std::cout << "YES" << std::endl;
+    }
+}
+
 int solve(const std::string &s) {
     if (s.size() <= 1) return s.size();
     std::vector<int> flag(26, -1);
@@ -261,11 +274,5 @@ void aa() {
 
 int main() {
     aa();
-//    std::vector<std::string> result;
-//    int i = solve(result, "abc");
-//    for (auto &s: result) {
-//        std::cout << s << std::endl;
-//    }
-//    fh();
     return 0;
 }

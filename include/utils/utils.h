@@ -9,15 +9,8 @@
 #include "forward_list"
 
 namespace utils {
-    std::chrono::time_point<std::chrono::system_clock> now() {
-        return std::chrono::system_clock::now();
-    }
-
-    long elapsed(std::chrono::time_point<std::chrono::system_clock> &start) {
-        auto e = std::chrono::system_clock::now() - start;
-        return std::chrono::duration_cast<std::chrono::milliseconds>(e).count();
-    }
-
+    std::chrono::time_point<std::chrono::system_clock> now();
+    long elapsed(std::chrono::time_point<std::chrono::system_clock> &start);
     template<typename T>
     void display(const std::vector<T> &v) {
         std::cout << "[";
@@ -27,7 +20,6 @@ namespace utils {
         }
         std::cout << "]" << std::endl;
     }
-
     template<typename T>
     void display(const std::list<T> &v) {
         std::cout << "[";
@@ -37,7 +29,6 @@ namespace utils {
         }
         std::cout << "]" << std::endl;
     }
-
     template<typename T>
     void display(const std::forward_list<T> &v) {
         std::cout << "[";
