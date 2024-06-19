@@ -9,15 +9,8 @@
 #include "forward_list"
 
 namespace utils {
-    std::chrono::time_point<std::chrono::system_clock> now() {
-        return std::chrono::system_clock::now();
-    }
-
-    long elapsed(std::chrono::time_point<std::chrono::system_clock> &start) {
-        auto e = std::chrono::system_clock::now() - start;
-        return std::chrono::duration_cast<std::chrono::milliseconds>(e).count();
-    }
-
+    std::chrono::time_point<std::chrono::system_clock> now();
+    long elapsed(std::chrono::time_point<std::chrono::system_clock> &start);
     template<typename T>
     void display(const std::vector<T> &v) {
         std::cout << "[";
@@ -27,7 +20,6 @@ namespace utils {
         }
         std::cout << "]" << std::endl;
     }
-
     template<typename T>
     void display(const std::list<T> &v) {
         std::cout << "[";
@@ -37,7 +29,6 @@ namespace utils {
         }
         std::cout << "]" << std::endl;
     }
-
     template<typename T>
     void display(const std::forward_list<T> &v) {
         std::cout << "[";
@@ -89,6 +80,19 @@ namespace utils {
         catch (const std::exception &e) {
             return {e.what()};
         }
+    }
+
+    template<typename S>
+    int64_t HexToInt64(const S &s) {
+        int64_t result{0};
+        for (size_t i = 0ul; i < s.size(); ++i) {
+            result = result << 4;
+            if ('0' <= s[i] && s[i] <= '9') result += s[i] - '0';
+            else if ('a' <= s[i] && s[i] <= 'f') result += s[i] - 'a' + 10;
+            else if ('A' <= s[i] && s[i] <= 'F') result += s[i] - 'A' + 10;
+            else break;
+        }
+        return result;
     }
 }
 

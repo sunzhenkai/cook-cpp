@@ -56,6 +56,19 @@ void tf() {
     std::cout << typeid(j).name() << " " << sizeof(j) << " " << sizeof(a) << std::endl;
 }
 
+void tg() {
+    auto r = "6601160d8e989550754ceaax";
+    auto s = utils::GetTimestampFromRequestId(r);
+    std::cout << s << std::endl;
+}
+
+void th() {
+    std::shared_ptr<int> i;
+    if (i == nullptr) {
+        std::cout << "YES" << std::endl;
+    }
+}
+
 int solve(const std::string &s) {
     if (s.size() <= 1) return s.size();
     std::vector<int> flag(26, -1);
@@ -209,7 +222,8 @@ void fh() {
 // 所有字符的组合
 // a b c
 
-void solve_recursive(std::vector<std::string> &result, const std::string &s, std::string &cur, size_t length, size_t index) {
+void
+solve_recursive(std::vector<std::string> &result, const std::string &s, std::string &cur, size_t length, size_t index) {
     if (index >= s.size()) {
         result.emplace_back(std::string{cur.data(), cur.data() + length});
         return;
@@ -253,12 +267,12 @@ sum_1[i] - sum_1[i-cur_min*2] == cur_min && sum_2[i] - sum_2[i-cur_min*2] == cur
 
  * */
 
+void aa() {
+    std::string s = "ff";
+    std::cout << utils::HexToInt64(s) << " - " << std::stol(s, nullptr, 16) << std::endl;
+}
+
 int main() {
-    std::vector<std::string> result;
-//    int i = solve(result, "abc");
-    for (auto &s: result) {
-        std::cout << s << std::endl;
-    }
-//    fh();
+    aa();
     return 0;
 }
