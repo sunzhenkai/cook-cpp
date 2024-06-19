@@ -29,7 +29,7 @@ void ta() {
     std::cout << ToString(data) << std::endl;
 
     std::vector<std::vector<float>> data2(1, data);
-//    std::cout << ToString(data2) << std::endl;
+    //    std::cout << ToString(data2) << std::endl;
 }
 
 void tb() {
@@ -38,7 +38,14 @@ void tb() {
     std::cout << fmt::format("{}", f) << std::endl;
 }
 
+void tc() {
+    std::cout << fmt::format("{:.6g}", 3.14) << std::endl;
+    std::cout << fmt::format("{:.6g}", 1.0 / 3.0) << std::endl;
+    std::cout << fmt::format("{:.6g}", 10.0 / 3.0) << std::endl;
+    std::cout << fmt::format("{:.6g}", 100.0 / 3.0) << std::endl;
+}
+
 int main() {
-    tb();
+    tc();
     return 0;
 }

@@ -6,7 +6,6 @@
     "boost-algorithm",
     "fmt",
     "spdlog",
-    "seastar",
     "gflags",
     "protobuf",
     "leveldb",
@@ -40,10 +39,6 @@
     {
       "name": "spdlog",
       "version": "1.11.0"
-    },
-    {
-      "name": "seastar",
-      "version": "22.11.0"
     },
     {
       "name": "brpc",

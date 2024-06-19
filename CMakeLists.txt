@@ -50,3 +50,11 @@ include(cmakes/thread.cmake)
 include(cmakes/boost.cmake)
 #include(cmakes/rapidjson.cmake)
 #include(cmakes/gtests.cmake)
+
+set_target_properties(${PROJECT_NAME} PROPERTIES
+        VERSION ${Ppconsul_VERSION}
+        SOVERSION "${Ppconsul_VERSION_MAJOR}.${Ppconsul_VERSION_MINOR}"
+        COMPILE_PDB_NAME ${PROJECT_NAME}
+        COMPILE_PDB_OUTPUT_DIRECTORY ${CMAKE_LIBRARY_OUTPUT_DIRECTORY}
+        FOLDER ${PROJECT_NAME}
+)
