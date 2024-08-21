@@ -2,26 +2,7 @@
   "name": "cook-cpp",
   "version": "0.0.1",
   "dependencies": [
-    "boost-core",
-    "boost-algorithm",
-    "fmt",
-    "spdlog",
-    "gflags",
-    "protobuf",
-    "leveldb",
-    "brpc",
-    "grpc",
-    "rapidjson",
-    "gtest",
-    "thrift",
-    "flatbuffers",
-    "datastax-cpp-driver",
-    "libuv",
-    "openssl",
-    "zlib",
-    "arrow",
-    "orc",
-    "mongo-cxx-driver"
+    "jemalloc"
   ],
   "overrides": [
     {

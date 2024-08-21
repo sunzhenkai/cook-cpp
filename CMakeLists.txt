@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.24)
+cmake_minimum_required(VERSION 3.22)
 # or -DCMAKE_TOOLCHAIN_FILE=/home/wii/.local/vcpkg/scripts/buildsystems/vcpkg.cmake
 project(cook-cpp)
 
@@ -21,6 +21,11 @@ include_directories(${SRC_DIR})
 set(COMMON_SRCS)
 aux_source_directory(src/utils COMMON_SRCS)
 
+include(FindPkgConfig)
+pkg_check_modules(jemalloc REQUIRED IMPORTED_TARGET jemalloc)
+add_executable(main src/main.cc)
+target_link_libraries(main PkgConfig::jemalloc)
+
 #message(STATUS "SRC_INCLUDE_DIR=${SRC_INCLUDE_DIR}, SRC_DIR=${SRC_DIR}")
 #message(STATUS "CMAKE_CURRENT_LIST_DIR = ${CMAKE_CURRENT_LIST_DIR}")
 #message(STATUS "COMMON_SRCS = ${COMMON_SRCS}")
@@ -32,7 +37,7 @@ aux_source_directory(src/utils COMMON_SRCS)
 #include(cmakes/cassandra.cmake)
 # cooking targets
 include(cmakes/basic.cmake)
-include(cmakes/socket.cmake)
+#include(cmakes/socket.cmake)
 #include(cmakes/arrow.cmake)
 #include(cmakes/study.cmake)
 #include(cmakes/mongo.cmake)
