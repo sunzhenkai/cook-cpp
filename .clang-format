@@ -1,6 +1,6 @@
 ---
 # use defaults from the LLVM style
-BasedOnStyle: LLVM
+BasedOnStyle: Google
 ColumnLimit: 120
 IndentWidth: 2
 ---
