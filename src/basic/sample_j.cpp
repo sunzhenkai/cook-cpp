@@ -16,7 +16,7 @@ public:
     }
 };
 
-int main() {
+void fa() {
     std::vector<ClsSortable> ls = {{1, "2"},
                                    {1, "1"},
                                    {3, "1"},
@@ -27,5 +27,18 @@ int main() {
     for (auto &i: ls) {
         std::cout << i.a << " " << i.b << std::endl;
     }
+}
+
+void fb() {
+    float fa[5] = {1.1, 2.2, 3.3, 4.4, 5.5};
+    float *fp = fa;
+    std::vector<float> fv(fp, fp + 5);
+    for (auto &i: fv) {
+        std::cout << i << std::endl;
+    }
+}
+
+int main() {
+    fb();
     return 0;
 }
