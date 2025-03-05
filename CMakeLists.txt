@@ -24,6 +24,10 @@ aux_source_directory(src/utils COMMON_SRCS)
 
 include(FindPkgConfig)
 pkg_check_modules(jemalloc REQUIRED IMPORTED_TARGET jemalloc)
+
+find_package(Boost REQUIRED)
+include_directories(${Boost_INCLUDE_DIRS})
+
 add_executable(main src/main.cc)
 target_link_libraries(main PkgConfig::jemalloc)
 

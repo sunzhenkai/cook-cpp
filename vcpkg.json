@@ -2,17 +2,12 @@
   "name": "cook-cpp",
   "version": "0.0.1",
   "dependencies": [
-    "jemalloc"
+    "jemalloc",
+    "boost-core",
+    "boost-algorithm",
+    "boost-spirit"
   ],
   "overrides": [
-    {
-      "name": "boost-core",
-      "version": "1.82.0"
-    },
-    {
-      "name": "boost-algorithm",
-      "version": "1.82.0"
-    },
     {
       "name": "fmt",
       "version": "9.1.0"
