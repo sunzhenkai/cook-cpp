@@ -2,6 +2,7 @@
 
 #include <babylon/anyflow/vertex.h>
 
+#include <boost/move/detail/meta_utils.hpp>
 #include <memory>
 
 #include "babylon/anyflow/builder.h"
@@ -32,14 +33,20 @@ void RunStartupGraph() {
   *(b->emit<int>()) = 2;
 
   // 4. 运行
-  auto *c = graph->find_data("c");  // 作为 output 数据
-  graph->run(c);
+  auto *c = graph->find_data("C");  // 作为 output 数据
+  auto closure = graph->run(c);
   std::cout << "I: " << *c->value<int>() << std::endl;
 
   // 5. reset graph
-  graph.reset();
+  closure.wait();
+  std::cout << closure.error_code() << " - " << closure.finished() << std::endl;
+  graph->reset();
+  // a = graph->find_data("A");
+  // b = graph->find_data("B");
+  // c = graph->find_data("C");  // 作为 output 数据
+
   *(a->emit<int>()) = 2;
   *(b->emit<int>()) = 3;
   graph->run(c);
-  std::cout << "I: " << *c->value<int>() << std::endl;
+  std::cout << "II: " << *c->value<int>() << std::endl;
 }
