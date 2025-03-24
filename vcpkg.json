@@ -5,7 +5,8 @@
     "jemalloc",
     "boost-core",
     "boost-algorithm",
-    "boost-spirit"
+    "boost-spirit",
+    "babylon"
   ],
   "overrides": [
     {

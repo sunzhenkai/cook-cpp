@@ -11,3 +11,5 @@ vcpkg_installed
 build
 
 *.log
+release
+.cache
