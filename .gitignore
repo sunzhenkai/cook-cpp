@@ -9,3 +9,5 @@ external/deps
 
 vcpkg_installed
 build
+
+*.log

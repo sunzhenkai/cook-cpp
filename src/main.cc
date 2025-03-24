@@ -1,7 +1,3 @@
 #include "iostream"
-#include "jemalloc/jemalloc.h"
 
-int main() {
-    je_malloc(0);
-    return 0;
-}
+int main() { return 0; }
