@@ -50,3 +50,41 @@ void RunStartupGraph() {
   graph->run(c);
   std::cout << "II: " << *c->value<int>() << std::endl;
 }
+
+void RunStartupGraphV2() {
+  // 1. 创建 Graph Builder
+  babylon::anyflow::GraphBuilder builder;
+  // 创建图节点
+  {
+    auto &v = builder.add_vertex([]() { return std::make_unique<PlusProcessor>(); });
+    // 必须绑定才行
+    v.named_depend("x").to("x");
+    v.named_depend("y").to("y");
+    v.named_emit("z").to("z");
+  }
+  builder.finish();
+
+  // 2. 创建 Graph 对象
+  auto graph = builder.build();
+
+  // 3. 图依赖数据赋值
+  // 3.1 找到 graph 数据对象
+  auto *x = graph->find_data("x");
+  auto *y = graph->find_data("y");
+  *(x->emit<int>()) = 1;
+  *(y->emit<int>()) = 2;
+
+  // 4. 运行
+  auto *c = graph->find_data("z");  // 作为 output 数据
+  auto closure = graph->run(c);
+  std::cout << "I: " << *c->value<int>() << std::endl;
+
+  // 5. reset graph
+  closure.wait();
+  std::cout << closure.error_code() << " - " << closure.finished() << std::endl;
+  graph->reset();
+  *(x->emit<int>()) = 2;
+  *(y->emit<int>()) = 3;
+  graph->run(c);
+  std::cout << "II: " << *c->value<int>() << std::endl;
+}

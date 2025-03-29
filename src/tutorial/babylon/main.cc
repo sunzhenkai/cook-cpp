@@ -8,6 +8,10 @@
 //   return 0;
 // }
 
+#define M_STR(e) #e
+#define M_M_STR(x) M_STR(x)
+#define REQ req
+
 #include "babylon/anyflow/builder.h"
 
 using babylon::anyflow::GraphBuilder;
@@ -76,5 +80,10 @@ int main(int, char**) {
     builder.finish();
   }
   RunStartupGraph();
+  // not work
+  RunStartupGraphV2();
+
+  std::cout << M_STR(REQ) << std::endl;
+  std::cout << M_M_STR(REQ) << std::endl;
   return 0;
 }

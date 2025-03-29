@@ -16,3 +16,4 @@ class PlusProcessor : public babylon::anyflow::GraphProcessor {
 };
 
 void RunStartupGraph();
+void RunStartupGraphV2();
