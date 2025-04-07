@@ -1,3 +1,5 @@
+#include <babylon/anyflow/vertex.h>
+
 #include <iostream>
 #include <memory>
 
@@ -30,6 +32,14 @@ class PlusProcessorV2 : public GraphProcessor {
   ANYFLOW_INTERFACE(ANYFLOW_DEPEND_DATA(int, x) ANYFLOW_DEPEND_DATA(int, y) ANYFLOW_EMIT_DATA(int, z))
 };
 
+class ErrorTrigger : public GraphProcessor {
+  int process() noexcept override {
+    std::cout << "run ErrorTrigger" << std::endl << std::flush;
+    return 1;
+  }
+  ANYFLOW_INTERFACE(ANYFLOW_DEPEND_DATA(int, x) ANYFLOW_EMIT_DATA(int, y))
+};
+
 int main(int, char**) {
   {
     GraphBuilder builder;
@@ -43,6 +53,9 @@ int main(int, char**) {
       v.named_depend("x").to("A");
       v.named_depend("y").to("B");
       v.named_emit("z").to("C");
+      auto& v2 = builder.add_vertex([]() { return std::make_unique<ErrorTrigger>(); });
+      v2.named_depend("x").to("A");
+      v2.named_emit("y").to("D");
     }
     // 结束构建
     builder.finish();
@@ -52,13 +65,20 @@ int main(int, char**) {
     auto* a = graph->find_data("A");
     auto* b = graph->find_data("B");
     auto* c = graph->find_data("C");
+    auto* d = graph->find_data("D");
     // 初始数据赋值
     *(a->emit<int>()) = 1;
     *(b->emit<int>()) = 2;
     // 针对c数据进行求解，会使用A, B的数据为依赖，运行节点来得到C
-    graph->run(c);
-    // 最终应该返回3
-    std::cout << *c->value<int>() << std::endl;
+    auto closer = graph->run(c, d);
+    closer.wait();
+    if (!closer.error_code()) {
+      // 最终应该返回3
+      std::cout << "RUN: " << *c->value<int>() << std::endl;
+      std::cout << "RUN: " << *d->value<int>() << std::endl;
+    } else {
+      std::cout << "Run failed. error_code=" << closer.error_code() << std::endl;
+    }
   }
   {
     GraphBuilder builder;
@@ -72,6 +92,8 @@ int main(int, char**) {
       // z 字段作为输出数据，指定数据名为 C
       v.named_emit("z").to("C");
       // A、B、C 是 processor 之外的名字
+      auto& v2 = builder.add_vertex([]() { return std::make_unique<ErrorTrigger>(); });
+      v2.named_depend("x").to("A");
     }
     builder.finish();
   }
