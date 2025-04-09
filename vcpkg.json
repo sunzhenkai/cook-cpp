@@ -2,11 +2,12 @@
   "name": "cook-cpp",
   "version": "0.0.1",
   "dependencies": [
-    "jemalloc",
+    "arrow",
     "boost-core",
     "boost-algorithm",
     "boost-spirit",
-    "babylon"
+    "babylon",
+    "jemalloc"
   ],
   "overrides": [
     {
