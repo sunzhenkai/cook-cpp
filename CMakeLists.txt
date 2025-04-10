@@ -55,3 +55,4 @@ include(cmakes/sample.cmake)
 # include(cmakes/rapidjson.cmake) include(cmakes/gtests.cmake)
 
 add_subdirectory(src/tutorial/babylon)
+add_subdirectory(src/tutorial/arrow)
