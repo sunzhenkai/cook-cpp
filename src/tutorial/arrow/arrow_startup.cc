@@ -265,6 +265,30 @@ TEST(ArrowConceptions, BasicDataStructures) {
   std::cout << "[BD]6> " << table->ToString() << std::endl;
 }
 
+TEST(ArrowConceptions, Tabular) {
+  // Tabular Data
+  // 1. Array、ChunkedArray, 是一维数据
+  // 2. Fields, 表示 Table 的一列
+  // 3. Schema, 描述了二维数据集（比如 Table）的整体结构.
+  //  3.1 Schema 包含一系列的 Fields, 以及 Schema 级别的 meta 信息
+  // 4. Table
+  //  4.1 Table 是一个二维数据集
+  //  4.2 包含保存 Columns 的 ChunkedArrays, 以及一个包含 Fields 的 Schema
+  //  4.3 每个列的元素必须有相同的逻辑长度
+  // 5. BatchRecord
+  //  5.1 描述了二维数据集
+  //  5.2 包含一系列的连续数组，这些数组有相同的长度
+  //  5.3 有也匹配数据类型的 Schema
+  //  5.4 BatchRecord 可以再不同实现之间传输，比如 IPC, C 数据接口
+  //  5.5 Table 和 Chunked Arrays 是特定语言的实现, 并不是 Arrow 数据格式, 不能直接移植
+  //  5.6 BatchRecord 可以方便地、无复制得构建 Table
+  //  5.7 Table 可以使用 arrow::TableBatchReader 流式转换为任意数量的 Record Batches
+  //  5.8 使用 arrow::Table::FromRecordBatches() 的一个工厂方法的重载，可以把一系列的 Batch Record 组装成 Table
+}
+
+// Docs: https://arrow.apache.org/docs/cpp/compute.html
+TEST(ArrowConceptions, ComputeFunctions) {}
+
 // Docs: https://arrow.apache.org/docs/cpp/tutorials/compute_tutorial.html
 TEST(ArrowConceptions, Computer) {
   std::cout << "[CMP]0> start" << std::endl;
@@ -313,7 +337,11 @@ TEST(ArrowConceptions, Computer) {
                         arrow::compute::CallFunction("index", {table->GetColumnByName("A")}, &index_options));
   std::cout << "[CMP]4> " << third_item.ToString() << " - " << third_item.type()->ToString() << std::endl;
   std::cout << "[CMP]5> " << third_item.scalar_as<arrow::Int64Scalar>().value << std::endl;
-
-  // 2. kernels
-  // 3. acero
 }
+
+TEST(ArrowConceptions, Kernels) {}
+
+// Docs: https://arrow.apache.org/docs/cpp/streaming_execution.html
+TEST(ArrowConceptions, Acero) {}
+
+TEST(ArrowConceptions, Gandiva) {}
