@@ -1,7 +1,9 @@
+#include <arrow/array/array_base.h>
 #include <arrow/array/array_nested.h>
 #include <arrow/result.h>
 #include <arrow/scalar.h>
 #include <arrow/status.h>
+#include <arrow/table.h>
 #include <arrow/type_fwd.h>
 #include <arrow/visit_type_inline.h>
 
@@ -11,9 +13,15 @@
 
 #include "arrow/api.h"
 #include "arrow/builder.h"
+#include "arrow/chunked_array.h"
+#include "arrow/ipc/json_simple.h"
 #include "arrow/record_batch.h"
 #include "arrow/type.h"
 #include "gtest/gtest.h"
+
+/**
+ * 1. cookbook: https://arrow.apache.org/cookbook/cpp/basic.html
+ */
 
 TEST(ArrowStatus, A) {
   arrow::NullBuilder nb;
@@ -81,26 +89,6 @@ TEST(ArrowVistor, Basic) {
   std::cout << arrow::VisitTypeInline(*strTp, &ivn) << std::endl;
 }
 
-TEST(ArrowConceptions, Type) {
-  // 1. data types
-  // 每个类型都有对应的类
-  // 1.1 通过枚举 Enums
-  auto ai32 = arrow::Type::INT32;
-  // 1.2 类型的基类
-  arrow::DataType;
-  // 1.3 工厂方法
-  auto ArrowInt32Type = arrow::int32();
-
-  // 2. Scalar
-  // 标量, 单个不可变值, 包含元素值及其类型
-  // 变量作为函数单值输入时很有用
-  // 虽然可以作为 Array 的元素，但是会产生额外的包装成本(比如额外的类型信息)
-  arrow::Result<std::shared_ptr<arrow::Scalar>> i32_scalar = arrow::MakeScalar(arrow::int32(), 10);
-  std::shared_ptr<arrow::Scalar> i32_scalar2 = arrow::MakeScalar(12);  // 自行推断类型
-  std::cout << "[SC]1> " << i32_scalar->get()->ToString() << std::endl;
-  std::cout << "[SC]2> " << i32_scalar2->ToString() << std::endl;
-}
-
 class RandomBatchGenerator {
  public:
   std::shared_ptr<arrow::Schema> schema;
@@ -134,7 +122,7 @@ class RandomBatchGenerator {
   }
 
   arrow::Status Visit(const arrow::ListType &type) {
-    std::poisson_distribution<> d{/*mean*/ 4};
+    std::poisson_distribution<> d{/*mean*/ 3};
     // 借助 RandomBatchGenerator 生成一维的随机数据，再进行拷贝
     auto builder = arrow::Int32Builder();
     ARROW_RETURN_NOT_OK(builder.Append(0));
@@ -167,9 +155,114 @@ TEST(ArrowData, GenerateRandom) {
       arrow::field("y", arrow::list(arrow::float64())),
   });
   RandomBatchGenerator generator(schema);
-  ARROW_ASSIGN_OR_RAISE(std::shared_ptr<arrow::RecordBatch> batch, generator.Generate(5));
+  ARROW_ASSIGN_OR_RAISE(std::shared_ptr<arrow::RecordBatch> batch, generator.Generate(3));
 
   std::cout << "Created batch:\n" << batch->ToString() << std::endl;
 
   ARROW_RETURN_NOT_OK(batch->ValidateFull());
+}
+
+TEST(ArrowConceptions, Type) {
+  // 1. data types
+  // 每个类型都有对应的类
+  // 1.1 通过枚举 Enums
+  auto ai32 = arrow::Type::INT32;
+  // 1.2 类型的基类
+  arrow::DataType;
+  // 1.3 工厂方法
+  auto ArrowInt32Type = arrow::int32();
+
+  // 2. Scalar
+  // 标量, 单个不可变值, 包含元素值及其类型
+  // 变量作为函数单值输入时很有用
+  // 虽然可以作为 Array 的元素，但是会产生额外的包装成本(比如额外的类型信息)
+  arrow::Result<std::shared_ptr<arrow::Scalar>> i32_scalar = arrow::MakeScalar(arrow::int32(), 10);
+  std::shared_ptr<arrow::Scalar> i32_scalar2 = arrow::MakeScalar(12);  // 自行推断类型
+  std::cout << "[SC]1> " << i32_scalar->get()->ToString() << std::endl;
+  std::cout << "[SC]2> " << i32_scalar2->ToString() << std::endl;
+
+  // 3. Array
+  arrow::Result<std::shared_ptr<arrow::Array>> arr =
+      arrow::ipc::internal::json::ArrayFromJSON(arrow::int32(), R"([1, 2, 3])");
+  // Result: A class for representing either a usable value, or an error.
+  // auto value = arr.ValueOrDie();
+  // arr.ValueOrElse(G &&generate_alternative)
+  // auto status = arr.Value(U *out); // set out & return status
+
+  std::cout << "[AR]1> " << arr->get()->ToString() << std::endl;
+
+  // 4. Chunked Array
+  auto arr1 = arrow::ipc::internal::json::ArrayFromJSON(arrow::int32(), R"([1, 2, 3])");
+  auto arr2 = arrow::ipc::internal::json::ArrayFromJSON(arrow::int32(), R"([4, 5])");
+  auto ca = arrow::ChunkedArray::Make({*arr1, *arr2});
+  std::cout << "[CA]1> " << ca->get()->ToString() << std::endl;
+}
+
+TEST(ArrowConceptions, BasicDataStructures) {
+  // 1. Arrays
+  arrow::Int8Builder i8b;
+  int8_t days_raw[5] = {1, 12, 17, 23, 28};
+  ARROW_RETURN_NOT_OK(i8b.AppendValues(days_raw, 5));
+  std::shared_ptr<arrow::Array> days;
+  ARROW_ASSIGN_OR_RAISE(days, i8b.Finish());
+  std::cout << "[BD]1> " << days->ToString() << std::endl;
+  // 1.1 after calling Finish, builder is reusable
+  int8_t months_raw[5] = {1, 3, 5, 7, 11};
+  ARROW_RETURN_NOT_OK(i8b.AppendValues(months_raw, 5));
+  std::shared_ptr<arrow::Array> months;
+  ARROW_ASSIGN_OR_RAISE(months, i8b.Finish());
+  std::cout << "[BD]2> " << months->ToString() << std::endl;
+
+  arrow::Int16Builder i16b;
+  int16_t years_raw[5] = {1993, 1999, 2000, 2020, 2025};
+  ARROW_RETURN_NOT_OK(i16b.AppendValues(years_raw, 5));
+  std::shared_ptr<arrow::Array> years;
+  ARROW_ASSIGN_OR_RAISE(years, i16b.Finish());
+  std::cout << "[BD]4> " << months->ToString() << std::endl;
+
+  // 2. ChunkedArrays
+  auto ca = arrow::ChunkedArray::Make({days, months});
+  std::cout << "[BD]3> " << ca->get()->ToString() << std::endl;
+  // 3. RecordBatch, from Arrays
+  // 3.1 Define schema
+  std::shared_ptr<arrow::Field> field_day, field_month, field_year;
+  std::shared_ptr<arrow::Schema> schema;
+  field_day = arrow::field("Day", arrow::int8());
+  field_month = arrow::field("Month", arrow::int8());
+  field_year = arrow::field("Year", arrow::int8());
+  schema = arrow::schema({field_day, field_month, field_year});
+  // 3.2 Build BatchRecord
+  std::shared_ptr<arrow::RecordBatch> rb;
+  rb = arrow::RecordBatch::Make(schema, days->length(), {days, months, years});
+  std::cout << "[BD]5> " << rb->ToString() << std::endl;
+  // 4. Table, from ChunkedArrays
+  // 4.1 chunked arrayes
+  int8_t days_raw2[5] = {6, 12, 3, 30, 22};
+  ARROW_RETURN_NOT_OK(i8b.AppendValues(days_raw2, 5));
+  std::shared_ptr<arrow::Array> days2;
+  ARROW_ASSIGN_OR_RAISE(days2, i8b.Finish());
+  int8_t months_raw2[5] = {5, 4, 11, 3, 2};
+  ARROW_RETURN_NOT_OK(i8b.AppendValues(months_raw2, 5));
+  std::shared_ptr<arrow::Array> months2;
+  ARROW_ASSIGN_OR_RAISE(months2, i8b.Finish());
+  int16_t years_raw2[5] = {1980, 2001, 1915, 2020, 1996};
+  ARROW_RETURN_NOT_OK(i16b.AppendValues(years_raw2, 5));
+  std::shared_ptr<arrow::Array> years2;
+  ARROW_ASSIGN_OR_RAISE(years2, i16b.Finish());
+  arrow::ArrayVector days_vec{days, days2};
+  std::shared_ptr<arrow::ChunkedArray> day_chunked = arrow::ChunkedArray::Make(days_vec).ValueOrDie();
+  arrow::ArrayVector months_vec{months, months2};
+  std::shared_ptr<arrow::ChunkedArray> month_chunked = arrow::ChunkedArray::Make(months_vec).ValueOrDie();
+  arrow::ArrayVector years_vec{years, years};
+  std::shared_ptr<arrow::ChunkedArray> years_chunked = arrow::ChunkedArray::Make(years_vec).ValueOrDie();
+  // 4.2 Making Table
+  std::shared_ptr<arrow::Table> table;
+  table = arrow::Table::Make(schema, {day_chunked, month_chunked, years_chunked}, 10);
+  std::cout << "[BD]6> " << table->ToString() << std::endl;
+}
+
+TEST(ArrowConceptions, Computer) {
+  // 1. datums
+  // 2. kernels
+  // 3. acero
 }
