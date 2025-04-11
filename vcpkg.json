@@ -2,7 +2,19 @@
   "name": "cook-cpp",
   "version": "0.0.1",
   "dependencies": [
-    "arrow",
+    {
+      "name": "arrow",
+      "features": [
+        "acero",
+        "compute",
+        "csv",
+        "dataset",
+        "filesystem",
+        "json",
+        "orc",
+        "parquet"
+      ]
+    },
     "boost-core",
     "boost-algorithm",
     "boost-spirit",

@@ -1,5 +1,8 @@
 #include <arrow/array/array_base.h>
 #include <arrow/array/array_nested.h>
+#include <arrow/compute/api_aggregate.h>
+#include <arrow/compute/exec.h>
+#include <arrow/datum.h>
 #include <arrow/result.h>
 #include <arrow/scalar.h>
 #include <arrow/status.h>
@@ -14,6 +17,7 @@
 #include "arrow/api.h"
 #include "arrow/builder.h"
 #include "arrow/chunked_array.h"
+#include "arrow/compute/api.h"
 #include "arrow/ipc/json_simple.h"
 #include "arrow/record_batch.h"
 #include "arrow/type.h"
@@ -261,8 +265,55 @@ TEST(ArrowConceptions, BasicDataStructures) {
   std::cout << "[BD]6> " << table->ToString() << std::endl;
 }
 
+// Docs: https://arrow.apache.org/docs/cpp/tutorials/compute_tutorial.html
 TEST(ArrowConceptions, Computer) {
+  std::cout << "[CMP]0> start" << std::endl;
+  // 0. prepare
+  arrow::Int32Builder i32b;
+  int32_t some_int32_raw[5] = {12, 234, 8324, 32819, 393928};
+  ARROW_RETURN_NOT_OK(i32b.AppendValues(some_int32_raw, 5));
+  std::cout << "[CMP]0> start" << std::endl;
+  ARROW_ASSIGN_OR_RAISE(auto some_nums, i32b.Finish());
+  int32_t more_int32_raw[5] = {1323, 943, 129, 99, 12393};
+  ARROW_RETURN_NOT_OK(i32b.AppendValues(more_int32_raw, 5));
+  std::cout << "[CMP]0> start" << std::endl;
+  ARROW_ASSIGN_OR_RAISE(auto more_nums, i32b.Finish());
+  std::cout << "[CMP]0> start" << std::endl;
+
+  auto schema = arrow::schema({
+      arrow::field("A", arrow::int32()),
+      arrow::field("B", arrow::int32()),
+  });
+  auto table = arrow::Table::Make(schema, {some_nums, more_nums}, 5);
+  std::cout << "[CMP]0> start" << std::endl;
   // 1. datums
+  // The datums class is what all compute functions output to
+  //  and then can take datums as input, as well
+  arrow::Datum sum;
+  std::cout << "[CMP]0> start" << std::endl;
+  auto r = arrow::compute::Sum({table->GetColumnByName("A")});
+  ARROW_ASSIGN_OR_RAISE(sum, arrow::compute::Sum({table->GetColumnByName("A")}));
+  std::cout << "[CMP]1> " << sum.ToString() << " - " << sum.type()->ToString() << std::endl;
+  // Datum 不能简单得推断我们的数据类型，需要显示指定我们需要的类型
+  std::cout << "[CMP]2> " << sum.scalar_as<arrow::Int64Scalar>().value << std::endl;
+  // 1.1 CallFunction: add
+  // element wise sum: add elements at the same position
+  arrow::Datum element_wise_sum;
+  ARROW_ASSIGN_OR_RAISE(element_wise_sum, arrow::compute::CallFunction("add", {
+                                                                                  table->GetColumnByName("A"),
+                                                                                  table->GetColumnByName("B"),
+                                                                              }));
+  std::cout << "[CMP]3> " << element_wise_sum.ToString() << " - " << element_wise_sum.type()->ToString() << std::endl;
+  // 1.2 CallFunction: index
+  arrow::Datum third_item;
+  arrow::compute::IndexOptions index_options;
+  index_options.value = arrow::MakeScalar(8324);
+  // get index of value 8324
+  ARROW_ASSIGN_OR_RAISE(third_item,
+                        arrow::compute::CallFunction("index", {table->GetColumnByName("A")}, &index_options));
+  std::cout << "[CMP]4> " << third_item.ToString() << " - " << third_item.type()->ToString() << std::endl;
+  std::cout << "[CMP]5> " << third_item.scalar_as<arrow::Int64Scalar>().value << std::endl;
+
   // 2. kernels
   // 3. acero
 }

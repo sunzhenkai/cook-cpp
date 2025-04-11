@@ -2,16 +2,20 @@
   "$schema": "https://raw.githubusercontent.com/microsoft/vcpkg-tool/main/docs/vcpkg-configuration.schema.json",
   "default-registry": {
     "kind": "git",
-    "repository": "https://gitee.com/mirrors/vcpkg",
-    "baseline": "21bbb14c4113b89cd06402e852e075341722304f"
+    "repository": "https://github.com/microsoft/vcpkg",
+    "baseline": "df8bfe519564ae001903e5cdd32af0999531ef71"
   },
   "registries": [
     {
       "kind": "git",
       "repository": "https://github.com/sunzhenkai/vcpkg-base.git",
       "baseline": "4acb1100c696f0bca6b7d549809e98bfc2160d9f",
-      "packages": ["seastar", "datastax-cpp-driver", "cpp-common", "babylon"]
+      "packages": [
+        "seastar",
+        "datastax-cpp-driver",
+        "cpp-common",
+        "babylon"
+      ]
     }
   ]
 }
-
