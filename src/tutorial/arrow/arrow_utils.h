@@ -69,7 +69,7 @@ arrow::Result<std::shared_ptr<arrow::dataset::Dataset>> GetDataset();
 arrow::Result<cp::ExecBatch> GetExecBatchFromVectors(const arrow::FieldVector& field_vector,
                                                      const arrow::ArrayVector& array_vector);
 
-struct BatchesWithSchema {
+struct BatchesWithSchemaV2 {
   std::vector<cp::ExecBatch> batches;
   std::shared_ptr<arrow::Schema> schema;
 
@@ -83,7 +83,23 @@ struct BatchesWithSchema {
   }
 };
 
+struct BatchesWithSchema {
+  std::vector<cp::ExecBatch> batches;
+  std::shared_ptr<arrow::Schema> schema;
+  // This method uses internal arrow utilities to
+  // convert a vector of record batches to an AsyncGenerator of optional batches
+  arrow::AsyncGenerator<std::optional<cp::ExecBatch>> Gen() const {
+    auto opt_batches = ::arrow::internal::MapVector(
+        [](cp::ExecBatch batch) { return std::make_optional(std::move(batch)); }, batches);
+    arrow::AsyncGenerator<std::optional<cp::ExecBatch>> gen;
+    gen = arrow::MakeVectorGenerator(std::move(opt_batches));
+    return gen;
+  }
+};
+
 arrow::Result<BatchesWithSchema> MakeBasicBatches();
+arrow::Result<BatchesWithSchema> MakeBasicBatchesV2();
 arrow::Result<BatchesWithSchema> MakeSortTestBasicBatches();
 arrow::Result<BatchesWithSchema> MakeGroupableBatches(int multiplicity = 1);
 arrow::Status ExecutePlayAndCollectAsTable(ac::Declaration plan);
+arrow::Status ExecutePlanAndCollectAsTableV2(ac::Declaration plan);

@@ -1,0 +1,2 @@
+zellij -u 0.42.1
+cmake -u 3.31.7

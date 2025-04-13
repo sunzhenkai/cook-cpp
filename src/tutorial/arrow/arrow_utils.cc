@@ -20,6 +20,7 @@
 #include <iostream>
 #include <limits>
 #include <memory>
+#include <utility>
 #include <vector>
 
 arrow::Result<std::shared_ptr<arrow::RecordBatch>> GetSampleRecordBatch(
@@ -65,6 +66,26 @@ arrow::Result<cp::ExecBatch> GetExecBatchFromVectors(const arrow::FieldVector& f
 }
 
 arrow::Result<BatchesWithSchema> MakeBasicBatches() {
+  BatchesWithSchema out;
+  auto field_vector = {arrow::field("a", arrow::int32()), arrow::field("b", arrow::boolean())};
+  ARROW_ASSIGN_OR_RAISE(auto b1_int, GetArrayDataSample<arrow::Int32Type>({0, 4}));
+  ARROW_ASSIGN_OR_RAISE(auto b2_int, GetArrayDataSample<arrow::Int32Type>({5, 6, 7}));
+  ARROW_ASSIGN_OR_RAISE(auto b3_int, GetArrayDataSample<arrow::Int32Type>({8, 9, 10}));
+
+  ARROW_ASSIGN_OR_RAISE(auto b1_bool, GetArrayDataSample<arrow::BooleanType>({false, true}));
+  ARROW_ASSIGN_OR_RAISE(auto b2_bool, GetArrayDataSample<arrow::BooleanType>({true, false, true}));
+  ARROW_ASSIGN_OR_RAISE(auto b3_bool, GetArrayDataSample<arrow::BooleanType>({false, true, false}));
+
+  ARROW_ASSIGN_OR_RAISE(auto b1, GetExecBatchFromVectors(field_vector, {b1_int, b1_bool}));
+  ARROW_ASSIGN_OR_RAISE(auto b2, GetExecBatchFromVectors(field_vector, {b2_int, b2_bool}));
+  ARROW_ASSIGN_OR_RAISE(auto b3, GetExecBatchFromVectors(field_vector, {b3_int, b3_bool}));
+
+  out.batches = {b1, b2, b3};
+  out.schema = arrow::schema(field_vector);
+  return out;
+}
+
+arrow::Result<BatchesWithSchema> MakeBasicBatchesV2() {
   BatchesWithSchema out;
   auto field_vector = {arrow::field("a", arrow::int32()), arrow::field("b", arrow::boolean())};
   ARROW_ASSIGN_OR_RAISE(auto b1_int, GetArrayDataSample<arrow::Int32Type>({0, 4}));
@@ -158,3 +179,11 @@ arrow::Status ExecutePlayAndCollectAsTable(ac::Declaration plan) {
 //   ac::Declaration source{"source", std::move(source_node_options)};
 //   return ExecutePlayAndCollectAsTable(std::move(source));
 // }
+
+arrow::Status ExecutePlanAndCollectAsTableV2(ac::Declaration plan) {
+  // collect sink_reader into a Table
+  std::shared_ptr<arrow::Table> response_table;
+  ARROW_ASSIGN_OR_RAISE(response_table, ac::DeclarationToTable(std::move(plan)));
+  std::cout << "Results : " << response_table->ToString() << std::endl;
+  return arrow::Status::OK();
+}

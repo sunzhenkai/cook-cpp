@@ -21,13 +21,20 @@ TEST(ArrowAcero, ScanSinkExample) {
   std::cout << "[DS]2> " << status.ToString() << std::endl;
 }
 
-// TEST(ArrowAcero, SourceSinkExample) {
-//   ARROW_ASSIGN_OR_RAISE(auto basic_data, MakeBasicBatches());
-//   auto source_node_options = ac::SourceNodeOptions{basic_data.schema, basic_data.Gen()};
-//   ac::Declaration source{"source", std::move(source_node_options)};
-//   auto status = ExecutePlayAndCollectAsTable(std::move(source));
-//   std::cout << "[SSE]1> " << status.ToString() << std::endl;
-// }
+TEST(ArrowAcero, SourceSinkExample) {
+  ARROW_ASSIGN_OR_RAISE(auto basic_data, MakeBasicBatches());
+  auto source_node_options = ac::SourceNodeOptions{basic_data.schema, basic_data.Gen()};
+  ac::Declaration source{"source", std::move(source_node_options)};
+  auto status = ExecutePlayAndCollectAsTable(std::move(source));
+  std::cout << "[SSE]1> " << status.ToString() << std::endl;
+}
+
+TEST(ArrowAcero, SourceSinkExampleV2) {
+  ARROW_ASSIGN_OR_RAISE(auto basic_data, MakeBasicBatches());
+  auto source_node_options = ac::SourceNodeOptions{basic_data.schema, basic_data.Gen()};
+  ac::Declaration source{"source", std::move(source_node_options)};
+  ExecutePlanAndCollectAsTableV2(std::move(source));
+}
 
 TEST(ArrowAcero, TableSourceSinkExample) {
   ARROW_ASSIGN_OR_RAISE(auto table, GetTable());
