@@ -55,3 +55,5 @@ TEST(ArrowAcero, ScanFilterSinkExample) {
 
   std::cout << "[SFS]1> " << status.ToString() << std::endl;
 }
+
+// https://arrow.apache.org/docs/cpp/acero/user_guide.html#project
