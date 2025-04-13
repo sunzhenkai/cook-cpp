@@ -5,6 +5,7 @@
 #include <arrow/array/array_primitive.h>
 #include <arrow/array/builder_primitive.h>
 #include <arrow/compute/exec.h>
+#include <arrow/dataset/api.h>
 #include <arrow/dataset/dataset.h>
 #include <arrow/record_batch.h>
 #include <arrow/result.h>
@@ -19,14 +20,7 @@
 #include <iostream>
 #include <limits>
 #include <memory>
-#include <utility>
 #include <vector>
-
-#include "arrow/acero/api.h"
-#include "arrow/util/vector.h"
-
-namespace cp = arrow::compute;
-namespace ac = arrow::acero;
 
 arrow::Result<std::shared_ptr<arrow::RecordBatch>> GetSampleRecordBatch(
     const arrow::ArrayVector& array_vector, const arrow::FieldVector& field_vector) {
@@ -69,20 +63,6 @@ arrow::Result<cp::ExecBatch> GetExecBatchFromVectors(const arrow::FieldVector& f
   cp::ExecBatch batch{*res_batch};
   return batch;
 }
-
-struct BatchesWithSchema {
-  std::vector<cp::ExecBatch> batches;
-  std::shared_ptr<arrow::Schema> schema;
-
-  arrow::AsyncGenerator<std::optional<cp::ExecBatch>> Gen() const {
-    // 为 Batches 包装 Optional
-    auto opt_batches = ::arrow::internal::MapVector(
-        [](cp::ExecBatch batch) { return std::make_optional(std::move(batch)); }, batches);
-    arrow::AsyncGenerator<std::optional<cp::ExecBatch>> gen;
-    gen = arrow::MakeVectorGenerator(std::move(opt_batches));
-    return gen;
-  }
-};
 
 arrow::Result<BatchesWithSchema> MakeBasicBatches() {
   BatchesWithSchema out;
@@ -156,9 +136,25 @@ arrow::Result<BatchesWithSchema> MakeGroupableBatches(int multiplicity = 1) {
   return out;
 }
 
-arrow::Status ExectePlayAndCollectAsTable(ac::Declaration plan) {
+arrow::Status ExecutePlayAndCollectAsTable(ac::Declaration plan) {
   std::shared_ptr<arrow::Table> response_table;
   ARROW_ASSIGN_OR_RAISE(response_table, ac::DeclarationToTable(plan));
   std::cout << "PlanAsTableResults: " << response_table->ToString() << std::endl;
   return arrow::Status::OK();
 }
+
+// arrow::Status ScanSinkExample() {
+//   ARROW_ASSIGN_OR_RAISE(std::shared_ptr<arrow::dataset::Dataset> dataset, GetDataset());
+//   auto options = std::make_shared<arrow::dataset::ScanOptions>();
+//   options->projection = cp::project({}, {});
+//   auto scan_node_options = arrow::dataset::ScanNodeOptions{dataset, options};
+//   ac::Declaration scan{"scan", std::move(scan_node_options)};
+//   return ExecutePlayAndCollectAsTable(std::move(scan));
+// }
+//
+// arrow::Status SourceSinkExample() {
+//   ARROW_ASSIGN_OR_RAISE(auto basic_data, MakeBasicBatches());
+//   auto source_node_options = ac::SourceNodeOptions{basic_data.schema, basic_data.Gen()};
+//   ac::Declaration source{"source", std::move(source_node_options)};
+//   return ExecutePlayAndCollectAsTable(std::move(source));
+// }

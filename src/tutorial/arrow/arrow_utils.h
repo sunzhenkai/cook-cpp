@@ -11,12 +11,17 @@
 #include <memory>
 #include <string>
 #include <type_traits>
+#include <utility>
 #include <vector>
 
 #include "arrow/api.h"
 #include "arrow/compute/api.h"
+#include "arrow/dataset/api.h"
 
 #define DECLARE_BUILDER_TYPE using ArrowBuildType = typename arrow::TypeTraits<TYPE>::BuilderType;
+
+namespace cp = arrow::compute;
+namespace ac = arrow::acero;
 
 template <typename TYPE, typename = typename std::enable_if<arrow::is_number_type<TYPE>::value |
                                                             arrow::is_boolean_type<TYPE>::value |
@@ -57,5 +62,26 @@ arrow::Result<std::shared_ptr<arrow::RecordBatch>> GetRecordBatchSample(
 /// 7,false
 /// 8,true
 /// \return The created table
-
 arrow::Result<std::shared_ptr<arrow::Table>> GetTable();
+arrow::Result<std::shared_ptr<arrow::dataset::Dataset>> GetDataset();
+arrow::Result<cp::ExecBatch> GetExecBatchFromVectors(const arrow::FieldVector& field_vector,
+                                                     const arrow::ArrayVector& array_vector);
+
+struct BatchesWithSchema {
+  std::vector<cp::ExecBatch> batches;
+  std::shared_ptr<arrow::Schema> schema;
+
+  arrow::AsyncGenerator<std::optional<cp::ExecBatch>> Gen() const {
+    // 为 Batches 包装 Optional
+    auto opt_batches = ::arrow::internal::MapVector(
+        [](cp::ExecBatch batch) { return std::make_optional(std::move(batch)); }, batches);
+    arrow::AsyncGenerator<std::optional<cp::ExecBatch>> gen;
+    gen = arrow::MakeVectorGenerator(std::move(opt_batches));
+    return gen;
+  }
+};
+
+arrow::Result<BatchesWithSchema> MakeBasicBatches();
+arrow::Result<BatchesWithSchema> MakeSortTestBasicBatches();
+arrow::Result<BatchesWithSchema> MakeGroupableBatches(int multiplicity = 1);
+arrow::Status ExecutePlayAndCollectAsTable(ac::Declaration plan);
