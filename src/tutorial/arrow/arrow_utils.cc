@@ -106,7 +106,7 @@ arrow::Result<BatchesWithSchema> MakeSortTestBasicBatches() {
   return out;
 }
 
-arrow::Result<BatchesWithSchema> MakeGroupableBatches(int multiplicity = 1) {
+arrow::Result<BatchesWithSchema> MakeGroupableBatches(int multiplicity) {
   BatchesWithSchema out;
   auto fields = {arrow::field("i32", arrow::int32()), arrow::field("str", arrow::utf8())};
   ARROW_ASSIGN_OR_RAISE(auto b1_int, GetArrayDataSample<arrow::Int32Type>({12, 7, 3}));

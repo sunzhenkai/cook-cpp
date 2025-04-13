@@ -14,9 +14,11 @@
 #include <utility>
 #include <vector>
 
+#include "arrow/acero/api.h"
 #include "arrow/api.h"
 #include "arrow/compute/api.h"
 #include "arrow/dataset/api.h"
+#include "arrow/util/vector.h"
 
 #define DECLARE_BUILDER_TYPE using ArrowBuildType = typename arrow::TypeTraits<TYPE>::BuilderType;
 
