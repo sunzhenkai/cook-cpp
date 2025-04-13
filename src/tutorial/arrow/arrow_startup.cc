@@ -15,7 +15,6 @@
 #include <random>
 
 #include "arrow/api.h"
-#include "arrow/builder.h"
 #include "arrow/chunked_array.h"
 #include "arrow/compute/api.h"
 #include "arrow/ipc/json_simple.h"
@@ -287,7 +286,9 @@ TEST(ArrowConceptions, Tabular) {
 }
 
 // Docs: https://arrow.apache.org/docs/cpp/compute.html
-TEST(ArrowConceptions, ComputeFunctions) {}
+TEST(ArrowConceptions, ComputeFunctions) {
+  // 1. 通用计算 api
+}
 
 // Docs: https://arrow.apache.org/docs/cpp/tutorials/compute_tutorial.html
 TEST(ArrowConceptions, Computer) {
@@ -340,8 +341,3 @@ TEST(ArrowConceptions, Computer) {
 }
 
 TEST(ArrowConceptions, Kernels) {}
-
-// Docs: https://arrow.apache.org/docs/cpp/streaming_execution.html
-TEST(ArrowConceptions, Acero) {}
-
-TEST(ArrowConceptions, Gandiva) {}

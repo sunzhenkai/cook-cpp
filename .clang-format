@@ -1,7 +1,7 @@
 ---
 # use defaults from the LLVM style
 BasedOnStyle: Google
-ColumnLimit: 120
+ColumnLimit: 100
 IndentWidth: 2
 ---
 Language: Proto
